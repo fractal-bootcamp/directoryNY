@@ -1,4 +1,5 @@
 import { SpaceListingCard } from "./components/compound/SpaceListingCard";
+import "./App.css";
 
 import { getAuth } from "firebase/auth";
 import PeopleListingSection from "./components/pages/PeopleListingSection";
@@ -38,9 +39,9 @@ export default function App() {
         <button className="no-underline rounded-md py-1.5 px-3 font-bold text-[#1d462f] border-2 hover:border-[#1d462f] bg-transparent hover:bg-[#e7e9d8]">
           Rooms
         </button>
-
-        <UserComponent />
-        <PeopleListingSection />
+        <div className="bg-grid-blue-300/[0.2]">
+          <PeopleListingSection />
+        </div>
       </div>
     </header>
   );

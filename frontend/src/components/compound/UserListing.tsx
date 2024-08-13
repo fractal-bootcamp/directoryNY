@@ -15,7 +15,12 @@ export default function UserListing({ UserData }: UserListingProps) {
           />
           <div className="flex flex-col items-center max-w-[60%]">
             <span className="font-semibold">{UserData.name}</span>
-            <span>@{UserData.contact.twitter_handle}</span>
+            <a
+              href={UserData.contact.twitter_url}
+              className="text-blue-500 hover:text-blue-400 "
+            >
+              @{UserData.contact.twitter_handle}
+            </a>
             <button className="bg-green-900 text-white rounded-3xl ring-offset-white font-semibold p-2">
               Contact me
             </button>
