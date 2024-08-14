@@ -9,6 +9,7 @@ import PeopleListingSection from "./components/pages/PeopleListingSection.tsx";
 import { SpaceListingPage } from "./components/pages/SpaceListingPage.tsx";
 import MainLayout from "./components/layouts/MainLayout.tsx";
 import { Login } from "./components/pages/Login.tsx";
+import MapView from "./components/pages/MapView.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "spaces",
         element: <SpaceListingPage />
+      },
+      {
+        path: "map",
+        element: <MapView />
       }
     ]
   },

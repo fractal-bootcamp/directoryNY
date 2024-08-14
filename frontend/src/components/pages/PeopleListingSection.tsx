@@ -196,6 +196,7 @@ export default function PeopleListingSection() {
               selected={leaseroommatereference}
               changeHandler={(e) => setLeaseroommatereference(e.target.value)}
             // defaultval="Any count"
+            // defaultval="Any count"
             />
 
             <div
@@ -218,6 +219,7 @@ export default function PeopleListingSection() {
             selected={leasetimingpreference}
             defaultval={default_values[2]}
             changeHandler={(e) => setLeasetimingpreference(e.target.value)}
+          // defaultval="Any timeline"
           // defaultval="Any timeline"
           />
         </div>

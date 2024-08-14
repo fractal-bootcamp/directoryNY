@@ -41,7 +41,7 @@ export default function NavBar() {
           <div className="flex space-x-4 py-3">
             <Link to="/" className="px-4 py-2 text-gray-600 bg-transparent hover:text-gray-900 border-b-2 border-gray-200 hover:border-gray-900">People</Link>
             <Link to="/spaces" className="px-4 py-2 text-gray-600 bg-transparent hover:text-gray-900 border-b-2 border-gray-200 hover:border-gray-900">Rooms</Link>
-            <button className="px-4 py-2 text-gray-400 bg-transparent cursor-not-allowed border-b-2 border-gray-200">Map View</button>
+            <Link to="/map" className="px-4 py-2 text-gray-600 bg-transparent hover:text-gray-900 border-b-2 border-gray-200 hover:border-gray-900">Map View</Link>
           </div>
         </div>
       </div>

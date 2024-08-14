@@ -48,11 +48,28 @@ export const api = axios.create({
 
 api.interceptors.request.use(async (config) => {
   const auth = getAuth();
-  const token = await auth.currentUser?.getIdToken();
-  console.log("attaching token", token)
+  const user = auth.currentUser;
+  let token = null;
+
+  if (user) {
+    try {
+      token = await user.getIdToken();
+      console.log("Firebase token obtained successfully");
+      console.log("token", token)
+    } catch (error) {
+      console.error("Error getting Firebase token:", error);
+    }
+  } else {
+    console.log("No current user found");
+  }
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log("Authorization header set");
+  } else {
+    console.log("No token available, request will be unauthorized");
   }
+
   return config;
 }, (error) => {
   return Promise.reject(error);

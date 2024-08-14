@@ -6,6 +6,12 @@ export const Login = () => {
 
     api.get('/test')
     UserService().getAll()
+        .then(response => {
+            console.log('All users:', response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+        });
 
 
     return (
