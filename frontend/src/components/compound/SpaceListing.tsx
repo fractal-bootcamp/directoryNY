@@ -6,6 +6,7 @@ import ContactMe from "../helper/ContactMe";
 import { SpaceListing } from "../../lib/services/Space-Listing/types";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import DescriptionBox from "./DescriptionBox";
 
 //https://pbs.twimg.com/profile_images/1387824030602780673/CqiWzrma_400x400.jpg
 
@@ -58,9 +59,11 @@ export default function SpaceListingCard({
           </span>
         </span>
         <div className="flex flex-col">
-          <div className=" rounded-xl text-xs p-2 bg-[#F6F5EB] my-1 text-slate-600">
-            {UserData.description}
-          </div>
+          <DescriptionBox
+            description={
+              "description description description descriptiondescription descriptiondescription descriptiondescription descriptiondescription descriptiondescription descriptiondescription descriptiondescription descriptiondescription descriptiondescription description description description descriptiondescription description description descriptiondescription description description descriptiondescription description description descriptiondescription description description descriptiondescription description description description"
+            }
+          />
           {/* <div className="flex flex-row gap-2"> */}
           <div className="text-xs md:text-sm bg-inherit">
             <div className="bg-inherit">

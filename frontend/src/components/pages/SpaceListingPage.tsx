@@ -35,7 +35,9 @@ export const SpaceListingPage = () => {
     <>
       <CreateSpaceListingArea />
       <SpaceListingSection />
-      <SpaceListingCard SpaceData={space_listing} />
+      <div className="w-[30%]">
+        <SpaceListingCard SpaceData={space_listing} />
+      </div>
     </>
   );
 };

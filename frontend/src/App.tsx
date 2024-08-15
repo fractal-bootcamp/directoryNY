@@ -22,29 +22,6 @@ const firebaseConfig = {
   measurementId: "G-9FDQYJECWD",
 };
 
-function ContactMe({
-  phone,
-  email,
-  twitter,
-}: {
-  phone: string;
-  email: string;
-  twitter: string;
-}) {
-  console.log("contact me");
-  return (
-    <>
-      <div>Hello contact</div>
-      <button
-        aria-haspopup="dialog"
-        className="bg-[#1D462F] text-white rounded-3xl ring-offset-white font-semibold p-2 text-xs"
-      >
-        Contact me
-      </button>
-    </>
-  );
-}
-
 // Initialize Firebase
 export default function App() {
   const app = initializeApp(firebaseConfig);
@@ -55,11 +32,6 @@ export default function App() {
 
   return (
     <header>
-      <ContactMe
-        phone="1000000000"
-        email="email@gmail.com"
-        twitter="elonmusk"
-      />
       <div>
         <NavBar />
       </div>

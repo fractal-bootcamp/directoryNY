@@ -2,6 +2,7 @@
 import UserListing from "../compound/UserListing";
 import { useEffect, useState } from "react";
 import { User } from "../../lib/services/users/types";
+import DescriptionBox from "../compound/DescriptionBox";
 // import { UserListingProps, UserListingType } from "../types";
 import {
   UserListingType,
