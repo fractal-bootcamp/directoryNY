@@ -34,7 +34,8 @@ export default function PeopleListingSection() {
     UserListingService()
       .getAll()
       .then((listings) => {
-        console.log("listings", listings.data.userlistings);
+        console.log("listings", listings.data);
+        console.error("not actually loading data here")
         setuserListings(userlistings);
       });
   }, []);
