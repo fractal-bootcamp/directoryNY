@@ -14,9 +14,7 @@ router.get('/all', async (req, res) => {
 });
 
 router.get("/:spaceListingId", async (req, res) => {
-    const spaceListing = await SpaceListingService().getSpaceListingById({
-        spaceListingId: req.params.spaceListingId,
-    });
+    const spaceListing = await SpaceListingService().getSpaceListingById(req.params.spaceListingId);
     if (spaceListing) {
         res.status(200).json(spaceListing);
     } else {
@@ -26,9 +24,7 @@ router.get("/:spaceListingId", async (req, res) => {
 
 router.post("/create", async (req, res) => {
     const newSpaceListing = req.body;
-    const spaceListing = await SpaceListingService().createSpaceListing({
-        newSpaceListing,
-    });
+    const spaceListing = await SpaceListingService().createSpaceListing(newSpaceListing);
     if (spaceListing) {
         res.status(201).json(spaceListing);
     } else {
@@ -38,9 +34,7 @@ router.post("/create", async (req, res) => {
 
 router.put("/:spaceListingId", async (req, res) => {
     const updatedSpaceListing = req.body;
-    const spaceListing = await SpaceListingService().updateSpaceListing({
-        updatedSpaceListing,
-    });
+    const spaceListing = await SpaceListingService().updateSpaceListing(updatedSpaceListing);
     if (spaceListing) {
         res.status(200).json(spaceListing);
     } else {
@@ -50,9 +44,7 @@ router.put("/:spaceListingId", async (req, res) => {
 
 router.delete("/:spaceListingId", async (req, res) => {
     const spaceListingId = req.params.spaceListingId;
-    const spaceListing = await SpaceListingService().deleteSpaceListing({
-        spaceListingId,
-    });
+    const spaceListing = await SpaceListingService().deleteSpaceListing(spaceListingId);
     if (spaceListing) {
         res.status(200).json(spaceListing);
     } else {

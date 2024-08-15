@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { UserService } from "../../../lib/services/users/service";
 
-const profileImage = "/src/assets/IMG_4528.jpg"
 
 export default function UserDropdown() {
     const [isOpen, setIsOpen] = useState(false);
+    const [profileImage, setProfileImage] = useState("");
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
+    useEffect(() => {
+        (async () => {
+            const user = await UserService().getCurrentUser();
+            setProfileImage(user.data.profilePicture);
+        })();
+    }, []);
+
+
 
     return (
         <div className="">
             <button
                 onClick={toggleDropdown}
-                className="flex items-center space-x-2 rounded-full focus:outline-none bg-transparent hover:bg-gray-200"
+                className="flex items-center space-x-2 rounded-full focus:outline-none bg-transparent"
             >
                 <img
                     src={profileImage}

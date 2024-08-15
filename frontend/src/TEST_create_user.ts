@@ -1,4 +1,4 @@
-import { UserService } from "./lib/services/users/service";
+import { UserService } from "./lib/services/Users/service";
 import SpaceListingService from "./lib/services/Space-Listing/service";
 import UserListingService from "./lib/services/User-Listing/service";
 
@@ -27,8 +27,8 @@ const usertest = {
 };
 
 async function logStuff() {
-  const result = await UserService().create(usertest);
-  const result2 = await UserService().getById(result.data.id);
+  //   const result = await UserService().create(usertest);
+  const result2 = await UserService().getById("MCfqxS9aWPcFeGS3CtOZh4F0diY2");
   console.log("result2");
 
   // const spaceinput = {

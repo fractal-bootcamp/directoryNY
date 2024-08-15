@@ -12,9 +12,15 @@ router.get('/users/all', async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 })
+
+router.get('/users/current', async (req, res) => {
+  const user = req.user
+  res.json(user)
+})
+
 router.get('/users/:userId', async (req, res) => {
   try {
-    const user = await UserService().getUserById({ userId: req.params.userId });
+    const user = await UserService().getUserById(req.params.userId);
     res.json(user);
   } catch (error) {
     console.error("Error getting user:", error);
@@ -22,9 +28,11 @@ router.get('/users/:userId', async (req, res) => {
   }
 });
 
+
+
 router.post('/users/new', async (req, res) => {
   try {
-    const user = await UserService().createUser({ newUser: req.body });
+    const user = await UserService().createUser(req.body);
     res.json(user);
   } catch (error) {
     console.error("Error creating user:", error);
@@ -36,7 +44,7 @@ router.put("/users/:userId", async (req, res) => {
   const userId = req.params.userId;
   const updatedUser = req.body;
   try {
-    const user = await UserService().updateUser({ updatedUser });
+    const user = await UserService().updateUser(updatedUser);
     res.json(user);
   } catch (error) {
     console.error("Error updating user:", error);
@@ -47,7 +55,7 @@ router.put("/users/:userId", async (req, res) => {
 router.delete("/users/:userId", async (req, res) => {
   const userId = req.params.userId;
   try {
-    const user = await UserService().deleteUser({ userId });
+    const user = await UserService().deleteUser(userId);
     res.json(user);
   } catch (error) {
     console.error("Error deleting user:", error);

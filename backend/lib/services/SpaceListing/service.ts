@@ -3,7 +3,7 @@ import type { SpaceListing } from "@prisma/client";
 import prisma from '../../../prisma/client'
 
 export const SpaceListingService = (): ISpaceListingService => ({
-    getSpaceListingById: async ({ spaceListingId }) => {
+    getSpaceListingById: async (spaceListingId) => {
         const spaceListing = await prisma.spaceListing.findUnique({
             where: {
                 id: spaceListingId
@@ -15,13 +15,13 @@ export const SpaceListingService = (): ISpaceListingService => ({
         const spaceListings = await prisma.spaceListing.findMany()
         return spaceListings
     },
-    createSpaceListing: async ({ newSpaceListing }: { newSpaceListing: Omit<SpaceListing, 'id'> }) => {
+    createSpaceListing: async (newSpaceListing) => {
         const spaceListing = await prisma.spaceListing.create({
             data: newSpaceListing
         })
         return spaceListing
     },
-    updateSpaceListing: async ({ updatedSpaceListing }) => {
+    updateSpaceListing: async (updatedSpaceListing) => {
         const { id, ...updateData } = updatedSpaceListing;
         const spaceListing = await prisma.spaceListing.update({
             where: { id },
@@ -29,7 +29,7 @@ export const SpaceListingService = (): ISpaceListingService => ({
         })
         return spaceListing
     },
-    deleteSpaceListing: async ({ spaceListingId }) => {
+    deleteSpaceListing: async (spaceListingId) => {
         const spaceListing = await prisma.spaceListing.delete({
             where: {
                 id: spaceListingId

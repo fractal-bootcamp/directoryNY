@@ -11,9 +11,9 @@ router.get('/all', async (req, res) => {
 });
 
 router.get("/:userListingId", async (req, res) => {
-    const userListing = await UserListingService().getUserListingById({
-        userListingId: req.params.userListingId,
-    });
+    const userListing = await UserListingService().getUserListingById(
+        req.params.userListingId
+    );
     if (userListing) {
         res.status(200).json(userListing);
     } else {
@@ -23,9 +23,7 @@ router.get("/:userListingId", async (req, res) => {
 
 router.post("/create", async (req, res) => {
     const newUserListing = req.body;
-    const userListing = await UserListingService().createUserListing({
-        newUserListing,
-    });
+    const userListing = await UserListingService().createUserListing(newUserListing);
     if (userListing) {
         res.status(201).json(userListing);
     } else {
@@ -35,9 +33,7 @@ router.post("/create", async (req, res) => {
 
 router.put("/:userListingId", async (req, res) => {
     const updatedUserListing = req.body;
-    const userListing = await UserListingService().updateUserListing({
-        updatedUserListing,
-    });
+    const userListing = await UserListingService().updateUserListing(updatedUserListing);
     if (userListing) {
         res.status(200).json(userListing);
     } else {
@@ -47,9 +43,7 @@ router.put("/:userListingId", async (req, res) => {
 
 router.delete("/:userListingId", async (req, res) => {
     const userListingId = req.params.userListingId;
-    const userListing = await UserListingService().deleteUserListing({
-        userListingId,
-    });
+    const userListing = await UserListingService().deleteUserListing(userListingId);
     if (userListing) {
         res.status(200).json(userListing);
     } else {

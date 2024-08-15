@@ -3,7 +3,7 @@ import type { UserListing } from "@prisma/client";
 import prisma from '../../../prisma/client'
 
 export const UserListingService = (): IUserListingService => ({
-    getUserListingById: async ({ userListingId }) => {
+    getUserListingById: async (userListingId) => {
         const userListing = await prisma.userListing.findUnique({
             where: {
                 id: userListingId
@@ -15,13 +15,13 @@ export const UserListingService = (): IUserListingService => ({
         const userListings = await prisma.userListing.findMany()
         return userListings
     },
-    createUserListing: async ({ newUserListing }) => {
+    createUserListing: async (newUserListing) => {
         const userListing = await prisma.userListing.create({
             data: newUserListing
         })
         return userListing
     },
-    updateUserListing: async ({ updatedUserListing }) => {
+    updateUserListing: async (updatedUserListing) => {
         const { id, ...updateData } = updatedUserListing
 
         const userListing = await prisma.userListing.update({
@@ -33,7 +33,7 @@ export const UserListingService = (): IUserListingService => ({
         return userListing
 
     },
-    deleteUserListing: async ({ userListingId }) => {
+    deleteUserListing: async (userListingId) => {
         const userListing = await prisma.userListing.delete({
             where: {
                 id: userListingId

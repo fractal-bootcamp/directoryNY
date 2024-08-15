@@ -1,5 +1,5 @@
 import api from "../../../network/api"
-import { UserService } from "../../lib/services/users/service"
+import { UserService } from "../../lib/services/Users/service"
 import SignInButton from "../compound/SignInbutton"
 
 export const Login = () => {

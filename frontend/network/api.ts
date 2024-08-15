@@ -34,6 +34,7 @@ export const EP = {
     createUser: `/users/new`,
     updateUser: (userId: string) => `/users/${userId}`,
     deleteUser: (userId: string) => `/users/${userId}`,
+    getCurrentUser: "/users/current",
   },
 };
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";

@@ -7,19 +7,19 @@ import { SpaceListing, SpaceListingInput } from "./types"
 type Response<T> = Promise<{ data: T; error: string }>;
 
 const SpaceListingService = () => ({
-    create: (spaceListing: SpaceListingInput): Response<{ listing: SpaceListing }> =>
+    create: (spaceListing: SpaceListingInput): Response<SpaceListing> =>
         api.post(EP.listings.createListing, spaceListing),
 
-    getById: (listingId: string): Response<{ listing: SpaceListing }> =>
+    getById: (listingId: string): Response<SpaceListing> =>
         api.get(EP.listings.getListingById(listingId)),
 
-    getAll: (): Response<{ listings: SpaceListing[] }> =>
+    getAll: (): Response<SpaceListing[]> =>
         api.get(EP.listings.getAllListings),
 
-    update: (listingId: string, spaceListing: Partial<SpaceListingInput>): Response<{ listing: SpaceListing }> =>
+    update: (listingId: string, spaceListing: Partial<SpaceListingInput>): Response<SpaceListing> =>
         api.put(EP.listings.updateListing(listingId), spaceListing),
 
-    delete: (listingId: string): Response<{ listing: SpaceListing }> =>
+    delete: (listingId: string): Response<SpaceListing> =>
         api.delete(EP.listings.deleteListing(listingId))
 });
 

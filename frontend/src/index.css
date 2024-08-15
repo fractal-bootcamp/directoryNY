@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* * {
+  font-family: "__Noto_Serif_bd6aef", "__Noto_Serif_Fallback_bd6aef";
+  font-style: normal;
+  font-weight: 400;
+} */

@@ -1,33 +1,41 @@
 import { useEffect, useState } from "react"
-import { UserService } from "../../lib/services/users/service"
+import { UserService } from "../../lib/services/Users/service"
 import { SpaceListing, SpaceListingInput } from "../../lib/services/Space-Listing/types"
 import SpaceListingService from "../../lib/services/Space-Listing/service"
 import { SpaceListingCreateForm } from "./SpaceListingCreateForm"
 import SpaceBanner from "./Banner/SpaceBanner"
+import { User } from "../../lib/services/Users/types"
+import api, { EP } from "../../../network/api"
 
 export const CreateSpaceListingArea = () => {
 
     const userService = UserService();
     const [userSpaceListings, setUserSpaceListings] = useState<SpaceListing[]>([]);
 
+    const [currentUser, setCurrentUser] = useState<User>()
+
+
+
     useEffect(() => {
-        const fetchUserSpaceListings = async () => {
+        const fetchUserAndListings = async () => {
             try {
-                // const user = await userService.getCurrentUser();
-                const user = { id: 'clzrcg4850000gwwz9cj69iyr' } // dummy til useUser is fixed
-                if (user && user.id) {
-                    const response = await SpaceListingService().getAll();
-                    if (response.data && response.data.listings) {
-                        const userListings = response.data.listings.filter(listing => listing.user_id === user.id);
+                const userResponse = await userService.getCurrentUser();
+                setCurrentUser(userResponse.data);
+                if (userResponse.data && userResponse.data) {
+                    const listingsResponse = await SpaceListingService().getAll();
+                    if (listingsResponse.data && listingsResponse.data.listings) {
+                        const userListings = listingsResponse.data.listings.filter(
+                            listing => listing.user_id === userResponse.data.id
+                        );
                         setUserSpaceListings(userListings);
                     }
                 }
             } catch (error) {
-                console.error("Error fetching user space listings:", error);
+                console.error("Error fetching user and space listings:", error);
             }
         };
 
-        fetchUserSpaceListings();
+        fetchUserAndListings();
     }, []);
 
     // const user = useUserService()
@@ -45,6 +53,14 @@ export const CreateSpaceListingArea = () => {
     return (
         <div>
             <SpaceBanner />
+            {currentUser ? (
+                <div>
+                    <p>Current User: {currentUser.id}</p>
+                    {/* Add more user details as needed */}
+                </div>
+            ) : (
+                "No user logged in"
+            )}
 
 
         </div>

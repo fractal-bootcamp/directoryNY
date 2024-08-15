@@ -8,7 +8,7 @@ export const UserService = (): IUserService => ({
         const users = await prisma.user.findMany()
         return users
     },
-    getUserById: async ({ userId }: { userId: string }) => {
+    getUserById: async (userId) => {
         const user = await prisma.user.findUnique({
             where: {
                 id: userId
@@ -16,13 +16,13 @@ export const UserService = (): IUserService => ({
         })
         return user
     },
-    createUser: async ({ newUser }: { newUser: Omit<User, 'id' | 'createdAt' | 'updatedAt'> }) => {
+    createUser: async (newUser) => {
         const user = await prisma.user.create({
             data: newUser
         })
         return user
     },
-    updateUser: async ({ updatedUser }: { updatedUser: User }) => {
+    updateUser: async (updatedUser) => {
         const { id, ...updateData } = updatedUser
         const user = await prisma.user.update({
             where: {
@@ -32,7 +32,7 @@ export const UserService = (): IUserService => ({
         })
         return user
     },
-    deleteUser: async ({ userId }: { userId: string }) => {
+    deleteUser: async (userId) => {
         const user = await prisma.user.delete({
             where: {
                 id: userId
@@ -40,7 +40,7 @@ export const UserService = (): IUserService => ({
         })
         return user
     },
-    getUserByFirebaseId: async ({ firebaseId }: { firebaseId: string }) => {
+    getUserByFirebaseId: async (firebaseId) => {
         const user = await prisma.user.findUnique({
             where: {
                 firebaseId: firebaseId

@@ -5,6 +5,9 @@ export default {
     extend: {
       backgroundColor: {
         primary: "#FEFBEB",
+        darkGreen: "#1D462F",
+        lightGreen: "#519F69",
+        normalBlue: "#5279E0",
       },
     },
   },
