@@ -1,3 +1,5 @@
+import { User } from "../users/types";
+
 export type UserListingType = {
   id: string;
   createdAt: string;
@@ -16,3 +18,9 @@ export type UserListingInput = Omit<
   UserListingType,
   "id" | "createdAt" | "updatedAt"
 >;
+
+export type UserListingProps = {
+  UserListingData: UserListingType;
+  UserData: User;
+  ReferrerData: User;
+};

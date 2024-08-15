@@ -1,14 +1,18 @@
-
 //import FilterSection from "../compound/FilterSection";
 import UserListing from "../compound/UserListing";
 import { useEffect, useState } from "react";
+import { User } from "../../lib/services/users/types";
 // import { UserListingProps, UserListingType } from "../types";
-import { UserListingType } from "../../lib/services/User-Listing/types";
+import {
+  UserListingType,
+  UserListingProps,
+} from "../../lib/services/User-Listing/types";
 import UserListingService from "../../lib/services/User-Listing/service";
 
 import { userlistings } from "../../userlistings";
 
 import ProfileBanner from "../compound/Banner/ProfileBanner";
+import { UserService } from "../../lib/services/users/service";
 
 // type UserPreference = Pick<
 //   UserListingType,
@@ -19,6 +23,9 @@ import ProfileBanner from "../compound/Banner/ProfileBanner";
 
 export default function PeopleListingSection() {
   const [userlistings, setuserListings] = useState<Array<UserListingType>>([]);
+  // const [users, setUsers] = useState<Array<User>>([]);
+  // const [referrers, setReferrers] = useState<Array<User>>([]);
+
   const currentDate = new Date();
 
   console.log("people section");
@@ -90,11 +97,7 @@ export default function PeopleListingSection() {
     console.log("frame", frame);
     userlistings
       .sort((a, b) =>
-        a.createdAt > b.createdAt
-          ? 1
-          : b.createdAt > a.createdAt
-            ? -1
-            : 0
+        a.createdAt > b.createdAt ? 1 : b.createdAt > a.createdAt ? -1 : 0
       )
       .filter((f) => {
         console.log(new Date(f.createdAt), frame);
@@ -103,8 +106,7 @@ export default function PeopleListingSection() {
           new Date(f.createdAt) > frame[2]
         );
         return (
-          new Date(f.createdAt) <= frame[1],
-          new Date(f.createdAt) > frame[2]
+          new Date(f.createdAt) <= frame[1], new Date(f.createdAt) > frame[2]
         );
       })
       .map((listing) => {
@@ -239,9 +241,8 @@ export default function PeopleListingSection() {
                 a.createdAt > b.createdAt
                   ? 1
                   : b.createdAt > a.createdAt
-                    ? -1
-                    : 0
-
+                  ? -1
+                  : 0
               )
               .filter(
                 (f) =>
@@ -260,7 +261,7 @@ export default function PeopleListingSection() {
                 );
               })
               .map((listing) => (
-                <UserListing UserData={listing} />
+                <UserListing UserListingData={listing} />
               ))}
           </div>
         </>
