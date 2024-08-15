@@ -3,44 +3,73 @@ import client from '../../../prisma/client';
 
 const router = express.Router();
 
-
-// Generate/retrieve referral code for a user
+// generate or retrieve referral code for a user
 router.get('/code/:userId', async (req, res) => {
     const { userId } = req.params;
     try {
-        const user = await client.user.findUnique({
-            where: { id: userId },
-            select: { referralCode: true }
+        console.log('userId', userId);
+        const referral = await client.referral.findFirst({
+            where: { referrerId: userId },
+            select: { id: true }
         });
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+
+        console.log('referral', referral);
+
+        if (!referral) {
+            // Check if the user exists
+            const user = await client.user.findUnique({
+                where: { id: userId }
+            });
+
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            // Create a new referral if the user exists
+            console.log('Creating new referral');
+            try {
+                const newReferral = await client.referral.create({
+                    data: {
+                        referrer: { connect: { id: userId } },
+                        status: 'pending'
+                    }
+                });
+                return res.json({ referralCode: newReferral.id });
+            } catch (error) {
+                console.error('Error creating referral:', error);
+                return res.status(500).json({ error: 'Failed to create referral' });
+            }
         }
-        res.json({ referralCode: user.referralCode });
+
+        res.json({ referralCode: referral.id });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to retrieve referral code' });
+        res.status(500).json({ error: 'Failed to retrieve or generate referral code' });
     }
 });
+
 
 // Apply a referral code when a new user signs up
 router.post('/apply', async (req, res) => {
     const { newUserId, referralCode } = req.body;
     try {
-        const referrer = await client.user.findUnique({
-            where: { referralCode }
+        const referral = await client.referral.findUnique({
+            where: { id: referralCode },
+            include: { referrer: true }
         });
-        if (!referrer) {
+        if (!referral) {
             return res.status(404).json({ error: 'Invalid referral code' });
         }
 
         await client.user.update({
             where: { id: newUserId },
-            data: { referredById: referrer.id }
+            data: { referredId: referral.referrerId }
         });
 
-        await client.referral.create({
+        await client.referral.update({
+            where: { id: referralCode },
             data: {
-                referrerId: referrer.id,
                 referredUser: newUserId,
+                status: 'completed'
             }
         });
 
