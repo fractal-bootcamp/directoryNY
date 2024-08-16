@@ -21,6 +21,7 @@ export const EP = {
       `/user-listings/${userlistingId}`,
     deleteUserListing: (userlistingId: string) =>
       `/user-listings/${userlistingId}`,
+    getCurrentUserListing: "/userlisting",
   },
   referrals: {
     getReferralCode: (userId: string) => `/referral/code/${userId}`,

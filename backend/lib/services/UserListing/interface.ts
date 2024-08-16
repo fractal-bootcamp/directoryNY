@@ -8,4 +8,5 @@ export interface IUserListingService {
   ): Promise<UserListing | null>;
   updateUserListing(updatedUserListing: UserListing): Promise<UserListing>;
   deleteUserListing(userListingId: string): Promise<UserListing>;
+  getOneUserListing(userId: string): Promise<UserListing | null>;
 }

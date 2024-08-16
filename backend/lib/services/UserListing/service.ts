@@ -11,6 +11,15 @@ export const UserListingService = (): IUserListingService => ({
     });
     return userListing;
   },
+  getOneUserListing: async (userId) => {
+    console.log("help here");
+    const userListing = await prisma.userListing.findFirst({
+      where: {
+        user_id: userId,
+      },
+    });
+    return userListing;
+  },
   getAllUserListings: async () => {
     const userListings = await prisma.userListing.findMany({
       orderBy: {
