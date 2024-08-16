@@ -195,7 +195,7 @@ export default function PeopleListingSection() {
               defaultval={default_values[1]}
               selected={leaseroommatereference}
               changeHandler={(e) => setLeaseroommatereference(e.target.value)}
-              // defaultval="Any count"
+            // defaultval="Any count"
             />
 
             <div
@@ -218,7 +218,7 @@ export default function PeopleListingSection() {
             selected={leasetimingpreference}
             defaultval={default_values[2]}
             changeHandler={(e) => setLeasetimingpreference(e.target.value)}
-            // defaultval="Any timeline"
+          // defaultval="Any timeline"
           />
         </div>
         {/* </div> */}
@@ -231,12 +231,12 @@ export default function PeopleListingSection() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-primary p-6">
             {userlistings
-              .sort((a, b) =>
+              .sort((b, a) =>
                 a.createdAt > b.createdAt
                   ? 1
                   : b.createdAt > a.createdAt
-                  ? -1
-                  : 0
+                    ? -1
+                    : 0
               )
               .filter(
                 (f) =>
