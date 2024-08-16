@@ -16,6 +16,7 @@ const SpaceBanner = () => {
     const fetchUserAndListings = async () => {
       try {
         const userResponse = await userService.getCurrentUser();
+        console.log("userResponse", userResponse);
         if (!userResponse.data) return;
         setCurrentUser(userResponse.data);
         if (userResponse.data) {

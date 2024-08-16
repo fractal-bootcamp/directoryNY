@@ -23,7 +23,6 @@ export const SpaceListingCreateForm: React.FC<SpaceListingCreateFormProps> = ({ 
             if (!user) return
             setCurrentUser(user)
             setFormData(prevData => ({ ...prevData, user_id: user.id || '' }))
-            console.log(user, 'here')
         }
         fetchUser()
     }, [])
@@ -52,14 +51,12 @@ export const SpaceListingCreateForm: React.FC<SpaceListingCreateFormProps> = ({ 
             ...prevData,
             [name]: value
         }))
-        console.log('hey formdata', formData)
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
             const response = await SpaceListingService().create(formData)
-            console.log('Space listing created:', response)
             setFormData({
                 user_id: currentUser?.id || '',
                 name: '',

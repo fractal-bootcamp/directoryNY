@@ -18,21 +18,25 @@ datasource db {
 // user
 model User {
   // metadata
-  id             String         @id @default(cuid())
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @default(now()) @updatedAt
+  id             String   @id @default(cuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
   // fields
-  displayName    String         @default("Twitter Friend")
-  twitterHandle  String         @default("@fractaltechnyc")
-  profilePicture String         @default("https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/f068d325-7a1f-4b06-a3ce-9cd8bab3f632/DALLE_2024-01-26_18.29.54_-_Create_a_highly_simplified_and_minimalist_pixelated_vector_illustration_of_a_1990s_computer_setup_inspired_by_Susan_Kares_iconic_design_style._The_i/w=256,quality=90,fit=scale-down")
-  firebaseId     String?        @unique
+  displayName    String   @default("Twitter Friend")
+  twitterHandle  String   @default("@fractaltechnyc")
+  profilePicture String   @default("https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/f068d325-7a1f-4b06-a3ce-9cd8bab3f632/DALLE_2024-01-26_18.29.54_-_Create_a_highly_simplified_and_minimalist_pixelated_vector_illustration_of_a_1990s_computer_setup_inspired_by_Susan_Kares_iconic_design_style._The_i/w=256,quality=90,fit=scale-down")
+  firebaseId     String?  @unique
   referredId     String?
+
   referredByUser User?          @relation("Referrals", fields: [referredId], references: [id])
   Listing        SpaceListing[]
   ReferredUsers  User[]         @relation("Referrals")
   UserListing    UserListing[]
   HelpForm       HelpForm[]
   Referrals      Referral[]
+
+  //   UserListing    UserListing?  @relation(fields: [userListingId], references: [id])  TODO: Make one to one relationship with user
+  // userListingId  String?       @unique // TODO: Make one to one relationship with user
 
   @@map("user")
 }
@@ -52,6 +56,7 @@ model UserListing {
   id              String   @id @default(cuid())
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now()) @updatedAt
+  // user_id         String   @unique // Ensure user_id is unique TODO: Make one to one relationship with user
   user_id         String
   User            User     @relation(fields: [user_id], references: [id])
   leaselength     String

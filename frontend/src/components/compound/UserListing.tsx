@@ -11,6 +11,7 @@ export default function UserListing({
 }: {
   UserData: UserListingType;
 }) {
+  console.log("UserData", UserData);
   return (
     <>
       <div className="p-4 bg-[#FFFDF3] rounded-2xl flex flex-col border-[1px] max-w-1/3 child-inherit-bg">
