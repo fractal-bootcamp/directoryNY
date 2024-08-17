@@ -51,14 +51,13 @@ export const UserListingService = (): IUserListingService => ({
         })
         return userListing
     },
-    updateUserListing: async (updatedUserListing) => {
-        const { id, ...updateData } = updatedUserListing
+    updateUserListing: async (updatedUserListingId, updatedUserListing) => {
 
         const userListing = await prisma.userListing.update({
             where: {
-                id
+                id: updatedUserListingId
             },
-            data: updateData
+            data: updatedUserListing
         })
         return userListing
 

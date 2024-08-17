@@ -12,6 +12,6 @@ export interface IUserListingService {
     getUserListingById(userListingId: string): Promise<UserListingDisplayData | null>
     getAllUserListings(): Promise<UserListingDisplayData[]>
     createUserListing(newUserListing: Omit<UserListing, "id">): Promise<UserListing>
-    updateUserListing(updatedUserListing: UserListing): Promise<UserListing>
+    updateUserListing(updatedUserListingId: string, updatedUserListing: Omit<UserListing, "id" | "createdAt" | "updatedAt">): Promise<UserListing>
     deleteUserListing(userListingId: string): Promise<UserListing>
 }

@@ -60,6 +60,7 @@ const ProfileBanner = ({ handleListingsChanged, userListings }: ProfileBannerPro
         <UserListingModal
           onClose={closeAddEditModal}
           onSubmitSuccess={handleListingsChanged}
+          listingExists={listingExists}
         />
       )}
       {isDeleteModalOpen && (
