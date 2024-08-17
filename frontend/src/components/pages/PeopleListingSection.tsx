@@ -24,7 +24,7 @@ export default function PeopleListingSection() {
     fetchListings();
   }, [fetchListings]);
 
-  const handleListingAdded = () => {
+  const handleListingsChanged = () => {
     fetchListings();
   };
 
@@ -133,7 +133,7 @@ export default function PeopleListingSection() {
   };
   return (
     <>
-      <ProfileBanner onListingAdded={handleListingAdded} />
+      <ProfileBanner handleListingsChanged={handleListingsChanged} userListings={userlistings} />
       <div className="flex flex-row gap-2 grow">
         <div className="flex flex-col gap-2 grow">
           <label
