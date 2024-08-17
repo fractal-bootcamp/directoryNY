@@ -4,9 +4,13 @@ import { UserListingDisplayData } from "../../lib/services/User-Listing/types";
 import UserListingService from "../../lib/services/User-Listing/service";
 import { LeaseLength, RoommateCount, MovingTimeline } from "./types";
 import ProfileBanner from "../compound/Banner/ProfileBanner";
+import { User } from "../../lib/services/Users/types";
+import { UserService } from "../../lib/services/Users/service";
 
 export default function PeopleListingSection() {
   const [userlistings, setuserListings] = useState<Array<UserListingDisplayData>>([]);
+  const userService = UserService();
+
   const currentDate = new Date();
 
   console.log("people section");
@@ -24,9 +28,17 @@ export default function PeopleListingSection() {
     fetchListings();
   }, [fetchListings]);
 
-  const handleListingsChanged = () => {
+  const handleListingsChanged = useCallback(() => {
+    console.log("listings bananaed");
     fetchListings();
-  };
+  }, [fetchListings]);
+
+
+  const removeUserListing = async () => {
+
+
+
+  }
 
   const default_values: [string, string, string] = [
     "Any lease",
