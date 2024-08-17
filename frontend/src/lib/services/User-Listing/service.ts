@@ -1,5 +1,5 @@
 import api, { EP } from "../../../../network/api";
-import { UserListingType, UserListingInput } from "./types";
+import { UserListingType, UserListingInput, UserListingDisplayData } from "./types";
 
 type Response<T> = Promise<{ data: T; error: string }>;
 
@@ -7,10 +7,10 @@ const UserListingService = () => ({
   create: (userListing: UserListingInput): Response<UserListingType> =>
     api.post(EP.userlistings.createListing, userListing),
 
-  getById: (userlistingId: string): Response<UserListingType> =>
+  getById: (userlistingId: string): Response<UserListingDisplayData> =>
     api.get(EP.userlistings.getUserListingById(userlistingId)),
 
-  getAll: (): Response<UserListingType[]> =>
+  getAll: (): Response<UserListingDisplayData[]> =>
     api.get(EP.userlistings.getAllUserListings),
 
   update: (

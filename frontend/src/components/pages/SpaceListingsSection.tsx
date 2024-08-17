@@ -71,7 +71,7 @@ export default function SpaceListingSection() {
 
   return (
     <>
-      <SpaceBanner />
+      <SpaceBanner onListingAdded={handleListingAdded} />
       <div className="flex flex-col items-center justify-center">
         <div className="flex flex-row items-center justify-between w-full">
           <SelectFilter

@@ -8,7 +8,9 @@ interface CreateSpaceListingAreaProps {
 export const CreateSpaceListingArea: React.FC<CreateSpaceListingAreaProps> = ({ onNewListing }) => {
     return (
         <div>
-            <SpaceListingCreateForm onSuccess={onNewListing} />
+            {/* <SpaceListingCreateForm onSuccess={onNewListing} /> */}
         </div>
     );
 };
+
+// TODO: REMOVE

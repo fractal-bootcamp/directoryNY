@@ -7,13 +7,43 @@ export const UserListingService = (): IUserListingService => ({
         const userListing = await prisma.userListing.findUnique({
             where: {
                 id: userListingId
+            },
+            include: {
+                User: {
+                    include: {
+                        referredByUser: true
+                    }
+                }
             }
+
         })
-        return userListing
+        if (!userListing) return null;
+
+        return {
+            ...userListing,
+            User: {
+                ...userListing.User,
+                referredByUser: userListing.User.referredByUser || undefined
+            }
+        };
     },
     getAllUserListings: async () => {
-        const userListings = await prisma.userListing.findMany()
-        return userListings
+        const userListings = await prisma.userListing.findMany({
+            include: {
+                User: {
+                    include: {
+                        referredByUser: true
+                    }
+                }
+            }
+        });
+        return userListings.map(listing => ({
+            ...listing,
+            User: {
+                ...listing.User,
+                referredByUser: listing.User.referredByUser || undefined
+            }
+        }));
     },
     createUserListing: async (newUserListing) => {
         const userListing = await prisma.userListing.create({

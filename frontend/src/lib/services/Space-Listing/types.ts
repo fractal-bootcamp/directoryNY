@@ -8,20 +8,27 @@ export type SpaceListing = {
   location: string;
   housemates: string;
   priceRange: string;
+  leaselength: string;
   website?: string;
   image?: string;
   phone?: string;
   email?: string;
   twitter_url?: string;
-  leaselength: string;
   twitter_handle: string;
   referrer_image?: string;
   referrer_name: string;
-  room_price: string;
   referrer_twitter_url: string;
-}
+};
 
 export type SpaceListingInput = Omit<
   SpaceListing,
-  "id" | "createdAt" | "updatedAt"
+  | "id"
+  | "createdAt"
+  | "updatedAt"
+  | "twitter_url"
+  | "referrer_image"
+  | "referrer_twitter_url"
+  | "twitter_handle"
+  | "referrer_name"
+  | "leaselength"
 >;

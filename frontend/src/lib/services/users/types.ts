@@ -40,4 +40,4 @@ export interface IUserService {
   update: (userId: string, user: User) => Response<User>;
   delete: (userId: string) => Response<User>;
   getCurrentUser: () => Response<User | null>;
-
+}

@@ -2,11 +2,10 @@
 import UserListing from "../compound/UserListing";
 import { useCallback, useEffect, useState } from "react";
 // import { UserListingProps, UserListingType } from "../types";
-import { UserListingType } from "../../lib/services/User-Listing/types";
+import { UserListingDisplayData } from "../../lib/services/User-Listing/types";
 import UserListingService from "../../lib/services/User-Listing/service";
 import { LeaseLength, RoommateCount, MovingTimeline } from "./types";
 
-import { userlistings } from "../../userlistings";
 
 import ProfileBanner from "../compound/Banner/ProfileBanner";
 
@@ -18,7 +17,7 @@ import ProfileBanner from "../compound/Banner/ProfileBanner";
 // >;
 
 export default function PeopleListingSection() {
-  const [userlistings, setuserListings] = useState<Array<UserListingType>>([]);
+  const [userlistings, setuserListings] = useState<Array<UserListingDisplayData>>([]);
   const currentDate = new Date();
 
   console.log("people section");
@@ -68,31 +67,6 @@ export default function PeopleListingSection() {
     ["This Month", adj_date(7), adj_date(31)],
     ["Older", adj_date(31), new Date(0)],
   ];
-  // function organizePosts(posts: Array<UserListingType>) {
-  //   const post_map = new Map();
-  //   POSTING_TIME_FRAMES.forEach((time) => post_map.set(time, []));
-  //   userlistings.forEach((value) => post_map.set(value.post_date, value));
-  //   return post_map;
-  // }
-  // console.log(organizePosts(userlistings));
-  // const TimeFrame = () => {
-  //   const post_map = organizePosts(userlistings);
-  //   console.log(post_map);
-  //   return POSTING_TIME_FRAMES.map((time) => {
-  //     console.log("time", time);
-  //     return (
-  //       <>
-  //         <div>{time}</div>
-  //         <div>Hello</div>
-  //         <div className="flex flex-row flex-wrap">
-  //           {post_map.get(time).map((listing) => (
-  //             <UserListing UserData={listing} />
-  //           ))}
-  //         </div>
-  //       </>
-  //     );
-  //   });
-  // };
 
   POSTING_TIME_FRAMES.map((frame) => {
     userlistings
@@ -195,7 +169,7 @@ export default function PeopleListingSection() {
               defaultval={default_values[1]}
               selected={leaseroommatereference}
               changeHandler={(e) => setLeaseroommatereference(e.target.value)}
-              // defaultval="Any count"
+            // defaultval="Any count"
             />
 
             <div
@@ -218,7 +192,7 @@ export default function PeopleListingSection() {
             selected={leasetimingpreference}
             defaultval={default_values[2]}
             changeHandler={(e) => setLeasetimingpreference(e.target.value)}
-            // defaultval="Any timeline"
+          // defaultval="Any timeline"
           />
         </div>
         {/* </div> */}
@@ -235,8 +209,8 @@ export default function PeopleListingSection() {
                 a.createdAt > b.createdAt
                   ? 1
                   : b.createdAt > a.createdAt
-                  ? -1
-                  : 0
+                    ? -1
+                    : 0
               )
               .filter(
                 (f) =>
@@ -255,7 +229,7 @@ export default function PeopleListingSection() {
                 );
               })
               .map((listing) => (
-                <UserListing key={listing.id} UserData={listing} />
+                <UserListing key={listing.id} UserListingData={listing} />
               ))}
           </div>
         </>

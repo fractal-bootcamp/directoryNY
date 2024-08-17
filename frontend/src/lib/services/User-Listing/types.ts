@@ -1,3 +1,5 @@
+import { User } from "../Users/types";
+
 export type UserListingType = {
   id: string;
   createdAt: Date;
@@ -10,6 +12,15 @@ export type UserListingType = {
   website?: string;
   phone?: string;
   email?: string;
+};
+
+
+export type UserWithReferredByUser = User & {
+  referredByUser?: User;
+};
+
+export type UserListingDisplayData = UserListingType & {
+  User: UserWithReferredByUser;
 };
 
 export type UserListingInput = Omit<

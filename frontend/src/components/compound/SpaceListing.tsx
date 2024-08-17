@@ -1,6 +1,4 @@
-import SpaceListingService from "../../lib/services/Space-Listing/service";
 
-import { UserListingType } from "../../lib/services/User-Listing/types";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import ContactMe from "../helper/ContactMe";
 import { SpaceListing } from "../../lib/services/Space-Listing/types";
