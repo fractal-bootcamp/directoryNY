@@ -11,6 +11,7 @@ interface ReferralProps {
 const Referral: React.FC<ReferralProps> = ({ onClose }) => {
     const [copied, setCopied] = useState(false);
     const [referralCode, setReferralCode] = useState('');
+    const [userId, setUserId] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -22,7 +23,10 @@ const Referral: React.FC<ReferralProps> = ({ onClose }) => {
     const fetchReferralCode = async () => {
         try {
             const userResponse = await UserService().getCurrentUser();
-            const userId = userResponse.data.id;
+            const userId = userResponse.data?.id;
+            if (userId) {
+                setUserId(userId);
+            };
             const response = await api.get(`/referral/code/${userId}`);
             console.log(response.data);
             setReferralCode(response.data.referralCode);
@@ -34,7 +38,7 @@ const Referral: React.FC<ReferralProps> = ({ onClose }) => {
         }
     };
 
-    const referralLink = `https://directoryNY.com/?referralCode=${referralCode}`;
+    const referralLink = `https://directoryNY.com/?ref=${referralCode}&uid=${userId}`;
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(referralLink);

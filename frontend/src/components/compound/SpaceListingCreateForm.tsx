@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { SpaceListingInput } from "../../lib/services/Space-Listing/types"
 import SpaceListingService from "../../lib/services/Space-Listing/service"
-import { UserService } from "../../lib/services/users/service"
-import { User } from "../../lib/services/users/types"
+import { UserService } from "../../lib/services/Users/service"
+import { User } from "../../lib/services/Users/types"
 
 interface SpaceListingCreateFormProps {
     onSuccess: () => void;
@@ -97,7 +97,6 @@ export const SpaceListingCreateForm: React.FC<SpaceListingCreateFormProps> = ({ 
             >
                 {isFormVisible ? 'Hide Form' : 'Create Space Listing'}
             </button>
-
             {isFormVisible && (
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserService } from "../../../lib/services/users/service";
+import { UserService } from "../../../lib/services/Users/service";
 
 import { getAuth } from 'firebase/auth';
 import firebaseApp from "../../../firebase"; // Ensure you import your firebase configuration

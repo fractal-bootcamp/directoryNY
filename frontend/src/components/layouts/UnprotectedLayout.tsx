@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom"
 import UnprotectedNavbar from "../compound/NavBar/UnprotectedNavbar";
-import { UserService } from "../../lib/services/users/service"; // Ensure UserService is correctly typed
+import { UserService } from "../../lib/services/Users/service"; // Ensure UserService is correctly typed
 import { useEffect } from "react";
 
 const UnprotectedLayout: React.FC = () => {

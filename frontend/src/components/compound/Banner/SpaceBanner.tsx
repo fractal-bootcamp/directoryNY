@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { UserService } from "../../../lib/services/users/service";
+import { UserService } from "../../../lib/services/Users/service";
 import SpaceListingService from "../../../lib/services/Space-Listing/service";
 import { SpaceListing } from "../../../lib/services/Space-Listing/types";
-import { User } from "../../../lib/services/users/types";
+import { User } from "../../../lib/services/Users/types";
 import { SpaceListingCreateForm } from "../SpaceListingCreateForm";
 
 const SpaceBanner = () => {

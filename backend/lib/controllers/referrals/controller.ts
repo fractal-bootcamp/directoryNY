@@ -52,31 +52,38 @@ router.get('/code/:userId', async (req, res) => {
 
 // Apply a referral code when a new user signs up
 router.post('/apply', async (req, res) => {
-    const { newUserId, referralCode } = req.body;
+    const { referralCode } = req.query;
+
     try {
         const referral = await client.referral.findUnique({
-            where: { id: referralCode },
+            where: { id: referralCode as string },
             include: { referrer: true }
         });
+
         if (!referral) {
             return res.status(404).json({ error: 'Invalid referral code' });
         }
 
+        if (referral.status === 'completed') {
+            return res.status(400).json({ error: 'Referral code has already been used' });
+        }
+
         await client.user.update({
-            where: { id: newUserId },
+            where: { id: userId },
             data: { referredId: referral.referrerId }
         });
 
         await client.referral.update({
-            where: { id: referralCode },
+            where: { id: referralCode as string },
             data: {
-                referredUser: newUserId,
+                referredUser: { connect: { id: userId } },
                 status: 'completed'
             }
         });
 
         res.json({ message: 'Referral applied successfully' });
     } catch (error) {
+        console.error('Error applying referral:', error);
         res.status(500).json({ error: 'Failed to apply referral' });
     }
 });
