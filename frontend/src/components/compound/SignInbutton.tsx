@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react"; // Ensure useState and useEffect are imported
 import firebaseApp from "../../firebase";
 import {
     getAuth,
@@ -9,7 +9,7 @@ import {
     setPersistence,
     browserLocalPersistence,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserService } from "../../lib/services/Users/service";
 
 interface ReloadUserInfo {
@@ -26,6 +26,20 @@ const SignInButton = () => {
     const auth = getAuth(firebaseApp);
     const navigate = useNavigate();
     const provider = new TwitterAuthProvider();
+
+    const [referralCode, setReferralCode] = useState<string | null>(null); // State for referral code
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        //    const params= useParams()
+        const code = params.get("referral"); // Get referral code from URL parameters
+        if (code) {
+            setReferralCode(code);
+            console.log("Referral code from params:", code);
+        }
+    }, []);
+
+
     const handleSignIn = async () => {
         try {
             await setPersistence(auth, browserLocalPersistence);
@@ -35,20 +49,36 @@ const SignInButton = () => {
             const token = user.accessToken;
             sessionStorage.setItem("firebaseUserToken", token);
 
+            // Handle referral code if present
+            if (referralCode) {
+                console.log("Using referral code:", referralCode);
+                // Fetch request to submit the token and referral code
+                const response = await fetch('/api/referral-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        token: token,
+                        referralCode: referralCode,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to submit referral code');
+                }
+                const data = await response.json();
+                console.log("Referral code response:", data);
+            }
+
             //Sending the twitter handle to the backend to save it with the user
             const current_user_res = await UserService().getCurrentUser();
             const current_user = current_user_res.data;
-            console.log("twitter current user", current_user);
             if (current_user) {
                 const response = await UserService().update(current_user.id, {
                     ...current_user,
                     twitterHandle: username,
                 });
-                console.log(
-                    "twitterHandle",
-                    response.data,
-                    response.data.twitterHandle
-                );
                 // await request.json();
                 if (!response.error) {
                     navigate("/");
