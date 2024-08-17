@@ -9,7 +9,6 @@ import { UserService } from "../../lib/services/Users/service";
 
 export default function PeopleListingSection() {
   const [userlistings, setuserListings] = useState<Array<UserListingDisplayData>>([]);
-  const userService = UserService();
 
   const currentDate = new Date();
 
@@ -33,12 +32,6 @@ export default function PeopleListingSection() {
     fetchListings();
   }, [fetchListings]);
 
-
-  const removeUserListing = async () => {
-
-
-
-  }
 
   const default_values: [string, string, string] = [
     "Any lease",
