@@ -4,6 +4,7 @@ import prisma from "../prisma/client"
 import { Request, Response, NextFunction } from "express";
 import { UserService } from "../lib/services/User/service";
 import { User } from "@prisma/client";
+import { upgradeTwitterPicResolution } from "../utils/upgradeTwitterPicResolution";
 
 const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY
   ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)
@@ -50,7 +51,7 @@ export const userMiddleware = async (req: Request, res: Response, next: NextFunc
       // User doesn't exist, create a new user
       const newUser: Omit<User, 'id' | 'createdAt' | 'updatedAt'> = {
         displayName: req.userTwitterDetails.displayName,
-        profilePicture: req.userTwitterDetails.profilePicture,
+        profilePicture: upgradeTwitterPicResolution(req.userTwitterDetails.profilePicture),
         twitterHandle: "@fractaltechnyc",
         referredId: null,
         firebaseId: firebaseId

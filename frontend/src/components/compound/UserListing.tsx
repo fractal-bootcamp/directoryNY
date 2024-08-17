@@ -10,6 +10,12 @@ export default function UserListing({
 }: {
   UserListingData: UserListingDisplayData;
 }) {
+
+  const referredByTwitterHandle = UserListingData.User.referredByUser?.twitterHandle || "@fractaltechnyc";
+  const referredByDisplayName = UserListingData.User.referredByUser?.displayName || "Fractal Tech";
+  const referredByProfilePicture = UserListingData.User.referredByUser?.profilePicture || "https://pbs.twimg.com/profile_images/1793404102040223744/MlVpqIPY_400x400.png";
+
+
   return (
     <>
       <div className="p-4 bg-[#FFFDF3] rounded-2xl flex flex-col border-[1px] max-w-1/3 child-inherit-bg">
@@ -59,23 +65,22 @@ export default function UserListing({
             <div>
               <div className="flex flex-row items-center">
 
-                {UserListingData.User.referredByUser && (
-                  <>
-                    <span className="text-xs md:text-sm font-semibold mr-1">
-                      Referred by
+
+                <>
+                  <span className="text-xs md:text-sm font-semibold mr-1">
+                    Referred by
+                  </span>
+                  <a href={`https://twitter.com/${referredByTwitterHandle}`} className="flex items-center">
+                    <img
+                      className="rounded-full w-7 h-7 undefined"
+                      alt="Referrer profile image"
+                      src={referredByProfilePicture}
+                    />
+                    <span className="text-blue-500 hover:text-blue-400 m-1 text-xs">
+                      {referredByDisplayName}
                     </span>
-                    <a href={`https://twitter.com/${UserListingData.User.referredByUser.twitterHandle}`} className="flex items-center">
-                      <img
-                        className="rounded-full w-7 h-7 undefined"
-                        alt="Referrer profile image"
-                        src={UserListingData.User.referredByUser.profilePicture}
-                      />
-                      <span className="text-blue-500 hover:text-blue-400 m-1 text-xs">
-                        {UserListingData.User.referredByUser.displayName}
-                      </span>
-                    </a>
-                  </>
-                )}
+                  </a>
+                </>
               </div>
             </div>
           </div>
