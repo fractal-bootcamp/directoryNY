@@ -18,32 +18,34 @@ datasource db {
 // user
 model User {
   // metadata
-  id             String         @id @default(cuid())
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @default(now()) @updatedAt
+  id               String         @id @default(cuid())
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @default(now()) @updatedAt
   // fields
-  displayName    String         @default("Twitter Friend")
-  twitterHandle  String         @default("@fractaltechnyc")
-  profilePicture String         @default("https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/f068d325-7a1f-4b06-a3ce-9cd8bab3f632/DALLE_2024-01-26_18.29.54_-_Create_a_highly_simplified_and_minimalist_pixelated_vector_illustration_of_a_1990s_computer_setup_inspired_by_Susan_Kares_iconic_design_style._The_i/w=256,quality=90,fit=scale-down")
-  firebaseId     String?        @unique
-  referredId     String?
-  referredByUser User?          @relation("Referrals", fields: [referredId], references: [id])
-  Listing        SpaceListing[]
-  ReferredUsers  User[]         @relation("Referrals")
-  UserListing    UserListing[]
-  HelpForm       HelpForm[]
-  Referrals      Referral[]
+  displayName      String         @default("Twitter Friend")
+  twitterHandle    String         @default("@fractaltechnyc")
+  profilePicture   String         @default("https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/f068d325-7a1f-4b06-a3ce-9cd8bab3f632/DALLE_2024-01-26_18.29.54_-_Create_a_highly_simplified_and_minimalist_pixelated_vector_illustration_of_a_1990s_computer_setup_inspired_by_Susan_Kares_iconic_design_style._The_i/w=256,quality=90,fit=scale-down")
+  firebaseId       String?        @unique
+  referredbyId     String?
+  referredBy       Referral?      @relation("ReferredByRelation", fields: [referredbyId], references: [id])
+  active           Boolean        @default(false)
+  Listing          SpaceListing[]
+  UserListing      UserListing[]
+  HelpForm         HelpForm[]
+  CreatedReferrals Referral[]     @relation("ReferrerRelation")
 
   @@map("user")
 }
 
 model Referral {
-  id           String   @id @default(cuid())
-  referrerId   String
-  referrer     User     @relation(fields: [referrerId], references: [id])
-  referredUser String?
-  createdAt    DateTime @default(now())
-  status       String   @default("pending")
+  id             String   @id @default(cuid())
+  referrerId     String
+  referrer       User     @relation("ReferrerRelation", fields: [referrerId], references: [id])
+  referredUserId String?
+  referredUsers  User[]   @relation("ReferredByRelation")
+  createdAt      DateTime @default(now())
+  count          Int      @default(0)
+  usageLimit     Int      @default(1)
 
   @@map("referral")
 }

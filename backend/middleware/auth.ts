@@ -5,6 +5,15 @@ import { Request, Response, NextFunction } from "express";
 import { UserService } from "../lib/services/User/service";
 import { User } from "@prisma/client";
 
+interface AuthenticatedRequest extends Request {
+  userFirebaseId?: string;
+  userTwitterDetails?: {
+    displayName: string;
+    profilePicture: string;
+  };
+  user?: User;
+}
+
 const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY
   ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)
   : {};
@@ -13,7 +22,7 @@ const app = admin.initializeApp({
   credential: admin.credential.cert(serviceAccountKey as admin.ServiceAccount),
 });
 
-export const requireAuth = async (req: Request, res: Response, next: NextFunction) => {
+export const requireAuth = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     return res.status(401).json({ message: "Token not found" });
@@ -36,7 +45,7 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
 
 // if they do exist, pass the user id from our database into req.user 
 
-export const userMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const userMiddleware = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const firebaseId = req.userFirebaseId
   if (!firebaseId) return res.status(401).json({ message: "Unauthorized" })
 
@@ -48,12 +57,17 @@ export const userMiddleware = async (req: Request, res: Response, next: NextFunc
       next();
     } else {
       // User doesn't exist, create a new user
+      if (!req.userTwitterDetails) {
+        return res.status(400).json({ message: "User Twitter details are missing" });
+      }
+
       const newUser: Omit<User, 'id' | 'createdAt' | 'updatedAt'> = {
         displayName: req.userTwitterDetails.displayName,
         profilePicture: req.userTwitterDetails.profilePicture,
         twitterHandle: "@fractaltechnyc",
-        referredId: null,
-        firebaseId: firebaseId
+        firebaseId: firebaseId,
+        active: false,
+        referredbyId: null
       }
       const createdUser = await UserService().createUser(newUser)
       req["user"] = createdUser
