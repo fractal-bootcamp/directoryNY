@@ -33,7 +33,7 @@ export default function SpaceListingCard({
         />
       )}
       <div className="p-4 bg-[#FFFDF3] rounded-2xl flex flex-col border-[1px] w-full max-w-sm child-inherit-bg">
-        <div className="flex items-center justify-between bg-inherit mb-4">
+        <div className="flex items-center justify-between bg-inherit">
           <img
             className="rounded-full w-20 h-20 object-cover"
             alt="Space photo"
@@ -54,6 +54,11 @@ export default function SpaceListingCard({
                 <p className="text-sm ml-1">{SpaceData.housemates}</p>
               </div>
             </div>
+            <ContactMe
+              phone={SpaceData.phone}
+              email={SpaceData.email}
+              twitter_url={SpaceData.twitter_url}
+            />
           </div>
         </div>
 
@@ -61,12 +66,6 @@ export default function SpaceListingCard({
           <span>@{SpaceData.twitter_handle}</span>
           <TwitterIcon fontSize="small" className="ml-1" />
         </div>
-
-        <ContactMe
-          phone={SpaceData.phone}
-          email={SpaceData.email}
-          twitter_url={SpaceData.twitter_url}
-        />
 
         <button
           onClick={openModal}

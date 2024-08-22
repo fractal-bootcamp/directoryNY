@@ -11,7 +11,6 @@ export default function UserListing({
 }: {
   UserListingData: UserListingDisplayData;
 }) {
-
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false); // State to manage modal visibility
 
   const openModal = () => {
@@ -22,12 +21,13 @@ export default function UserListing({
     setIsDescriptionOpen(false); // Function to close the modal
   };
 
-
-  const referredByTwitterHandle = UserListingData.User.referredByUser?.twitterHandle || "@fractaltechnyc";
-  const referredByDisplayName = UserListingData.User.referredByUser?.displayName || "Fractal Tech";
-  const referredByProfilePicture = UserListingData.User.referredByUser?.profilePicture || "https://pbs.twimg.com/profile_images/1793404102040223744/MlVpqIPY_400x400.png";
-
-
+  const referredByTwitterHandle =
+    UserListingData.User.referredByUser?.twitterHandle || "@fractaltechnyc";
+  const referredByDisplayName =
+    UserListingData.User.referredByUser?.displayName || "Fractal Tech";
+  const referredByProfilePicture =
+    UserListingData.User.referredByUser?.profilePicture ||
+    "https://pbs.twimg.com/profile_images/1793404102040223744/MlVpqIPY_400x400.png";
 
   return (
     <>
@@ -64,7 +64,7 @@ export default function UserListing({
             <ContactMe
               phone={UserListingData.phone}
               email={UserListingData.email}
-              twitter_url={undefined}
+              twitter_url={`https://twitter.com/${UserListingData.User.twitterHandle}`}
             />
           </div>
         </div>
@@ -95,14 +95,14 @@ export default function UserListing({
             </div>
             <div>
               <div className="flex flex-row items-center">
-
-
-
                 <>
                   <span className="text-xs md:text-sm font-semibold mr-1">
                     Referred by
                   </span>
-                  <a href={`https://twitter.com/${referredByTwitterHandle}`} className="flex items-center">
+                  <a
+                    href={`https://twitter.com/${referredByTwitterHandle}`}
+                    className="flex items-center"
+                  >
                     <img
                       className="rounded-full w-7 h-7 undefined"
                       alt="Referrer profile image"

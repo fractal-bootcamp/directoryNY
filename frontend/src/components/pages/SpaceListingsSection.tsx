@@ -48,11 +48,15 @@ export default function SpaceListingSection() {
 
       {POSTING_TIME_FRAMES.map((frame) => (
         <>
-          {console.log("helloo1", frame[0])}
           <div className="font-bold text-2xl pl-2 mt-4">
             {frame[0] as string}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-primary p-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-primary ">
+            {/* {console.log("helloo1", frame[0])}
+          <div className="font-bold text-2xl pl-2 mt-4">
+            {frame[0] as string}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-primary p-6"> */}
             {spaceListings
               .sort((a, b) =>
                 a.createdAt > b.createdAt
