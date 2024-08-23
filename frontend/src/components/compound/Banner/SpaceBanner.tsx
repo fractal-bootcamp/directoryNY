@@ -16,18 +16,7 @@ interface SpaceBannerProps {
   spaceListings: Array<SpaceListing>;
 }
 
-<<<<<<< HEAD
-
-
-interface SpaceBannerProps {
-  onListingAdded: () => void;
-}
-
-const SpaceBanner = ({ onListingAdded }: SpaceBannerProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
-=======
 const SpaceBanner = ({ handleListingsChanged, spaceListings }: SpaceBannerProps) => {
->>>>>>> main
 
   const listingExists: boolean = spaceListings.length > 0;
 

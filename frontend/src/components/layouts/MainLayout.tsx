@@ -18,29 +18,19 @@ const MainLayout: React.FC = () => {
         return () => unsubscribeAuth(); // Clean up the listener on unmount
     }, [auth, navigate]);
 
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       await UserService().getCurrentUser(); // Use the instance to call the method
-  //     } catch (error) {
-  //       console.error("Error fetching current user:", error); // Log the error
-  //       navigate("/login");
-  //     }
-  //   })();
-  // }, []);
-=======
     useEffect(() => {
         (async () => {
             try {
-                await UserService().getCurrentUser(); // Use the instance to call the method
+                const user = await UserService().getCurrentUser(); // Use the instance to call the method
+                // if (!user?.data?.referredbyId) {
+                //     navigate("/login/apply");
+                // }
             } catch (error) {
                 console.error("Error fetching current user:", error); // Log the error
                 navigate("/login");
             }
         })();
     }, []);
->>>>>>> main
 
     return (
         <div>

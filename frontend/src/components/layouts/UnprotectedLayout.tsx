@@ -41,6 +41,10 @@ const UnprotectedLayout: React.FC = () => {
                     if (updatedUser.data?.active === true) {
                         navigate('/');
                     }
+                    else {
+                        navigate('/login/apply');
+                    }
+
                 }
             }
         } catch (error) {

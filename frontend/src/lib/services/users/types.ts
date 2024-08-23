@@ -50,8 +50,8 @@ export type Referral = {
 export interface IUserService {
   getById: (userId: string) => Response<User>;
   getAll: () => Response<User[]>;
-  create: (user: Partial<User>) => Response<User>;
-  update: (userId: string, user: Partial<User>) => Response<User>;
+  create: (user: User) => Response<User>;
+  update: (userId: string, user: User) => Response<User>;
   delete: (userId: string) => Response<User>;
   getCurrentUser: () => Response<User | null>;
 }

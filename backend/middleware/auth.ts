@@ -69,22 +69,12 @@ export const userMiddleware = async (req: AuthenticatedRequest, res: Response, n
       const user = await UserService().createUser({
         firebaseId,
         displayName: req.userTwitterDetails.displayName,
-<<<<<<< HEAD
-        profilePicture: req.userTwitterDetails.profilePicture,
-        referredbyId: null,
-        twitterHandle: "",
+        profilePicture: upgradeTwitterPicResolution(req.userTwitterDetails.profilePicture),
+        twitterHandle: "@fractaltechnyc", referredbyId: null,
         active: false,
       });
       req["user"] = user;
-=======
-        profilePicture: upgradeTwitterPicResolution(req.userTwitterDetails.profilePicture),
-        twitterHandle: "@fractaltechnyc",
-        referredId: null,
-        firebaseId: firebaseId
-      }
-      const createdUser = await UserService().createUser(newUser)
-      req["user"] = createdUser
->>>>>>> main
+
       next();
 
     }
