@@ -17,9 +17,6 @@ app.use(express.json());
 
 // screen name is in the token response under reloadUserInfo.screenName	
 
-// app.post('/referralCheck', (req, res) => {
-// })
-
 app.use(requireAuth);
 app.use(userMiddleware);
 

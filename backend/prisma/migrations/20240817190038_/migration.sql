@@ -8,6 +8,7 @@ CREATE TABLE "user" (
     "profilePicture" TEXT NOT NULL DEFAULT 'https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/f068d325-7a1f-4b06-a3ce-9cd8bab3f632/DALLE_2024-01-26_18.29.54_-_Create_a_highly_simplified_and_minimalist_pixelated_vector_illustration_of_a_1990s_computer_setup_inspired_by_Susan_Kares_iconic_design_style._The_i/w=256,quality=90,fit=scale-down',
     "firebaseId" TEXT,
     "referredId" TEXT,
+    "active" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );

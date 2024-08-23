@@ -6,24 +6,33 @@ export const UserListingService = (): IUserListingService => ({
   getUserListingById: async (userListingId) => {
     const userListing = await prisma.userListing.findUnique({
       where: {
-        id: userListingId,
+        id: userListingId
       },
       include: {
         User: {
           include: {
-            referredByUser: true,
-          },
-        },
-      },
-    });
+            referredBy: {
+              include: {
+                referrer: true
+              }
+            }
+          }
+        }
+      }
+
+    })
     if (!userListing) return null;
 
     return {
       ...userListing,
       User: {
         ...userListing.User,
-        referredByUser: userListing.User.referredByUser || undefined,
-      },
+        referredBy: {
+          include: {
+            referrer: true
+          }
+        }
+      }
     };
   },
   getAllUserListings: async () => {
@@ -31,17 +40,25 @@ export const UserListingService = (): IUserListingService => ({
       include: {
         User: {
           include: {
-            referredByUser: true,
-          },
-        },
-      },
+            referredBy: {
+              include: {
+                referrer: true
+              }
+            }
+          }
+        }
+      }
     });
-    return userListings.map((listing) => ({
+    return userListings.map(listing => ({
       ...listing,
       User: {
         ...listing.User,
-        referredByUser: listing.User.referredByUser || undefined,
-      },
+        referredBy: {
+          include: {
+            referrer: true
+          }
+        }
+      }
     }));
   },
   createUserListing: async (newUserListing) => {
@@ -56,22 +73,24 @@ export const UserListingService = (): IUserListingService => ({
     return userListing;
   },
   updateUserListing: async (updatedUserListing) => {
-    const { id, ...updateData } = updatedUserListing;
+    const { id, ...updateData } = updatedUserListing
 
     const userListing = await prisma.userListing.update({
       where: {
-        id,
+        id
       },
-      data: updateData,
-    });
-    return userListing;
+      data: updateData
+    })
+    return userListing
+
   },
   deleteUserListing: async (userListingId) => {
     const userListing = await prisma.userListing.delete({
       where: {
-        id: userListingId,
-      },
-    });
-    return userListing;
-  },
-});
+        id: userListingId
+      }
+    })
+    return userListing
+
+  }
+})

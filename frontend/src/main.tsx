@@ -12,6 +12,7 @@ import UnprotectedHomepage from "./components/pages/UnprotectedHomepage.tsx";
 import UnprotectedLayout from "./components/layouts/UnprotectedLayout.tsx";
 import ApplyPage from "./components/pages/ApplyPage.tsx";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,10 +26,6 @@ const router = createBrowserRouter([
         path: "spaces",
         element: <SpaceListingPage />
       },
-      // {
-      //   path: "test",
-      //   element: <Test />
-      // }
     ]
   },
   {
@@ -43,14 +40,8 @@ const router = createBrowserRouter([
         path: "apply",
         element: <ApplyPage />
       }
-
     ]
-  },
-  // {
-  //   path: "/login",
-  //   element: <Login />
-  // }
-
+  }
 ])
 
 

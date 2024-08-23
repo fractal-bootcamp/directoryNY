@@ -21,7 +21,10 @@ const MainLayout: React.FC = () => {
     useEffect(() => {
         (async () => {
             try {
-                await UserService().getCurrentUser(); // Use the instance to call the method
+                const user = await UserService().getCurrentUser(); // Use the instance to call the method
+                // if (!user?.data?.referredbyId) {
+                //     navigate("/login/apply");
+                // }
             } catch (error) {
                 console.error("Error fetching current user:", error); // Log the error
                 navigate("/login");
