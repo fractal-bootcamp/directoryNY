@@ -83,7 +83,7 @@ const UnprotectedLayout: React.FC = () => {
 
     return (
         <div>
-            <main className=" bg-primary">
+            <main className="bg-primary overflow-hidden">
                 <div>
                     <Outlet />
                 </div>

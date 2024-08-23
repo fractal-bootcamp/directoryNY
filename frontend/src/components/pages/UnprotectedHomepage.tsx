@@ -32,7 +32,7 @@ const UnprotectedHomepage = () => {
         <div className="h-screen">
             <UnprotectedNavbar />
 
-            <div className="flex flex-col items-center h-full gap-6">
+            <div className="flex flex-col items-center h-full gap-2 md:gap-6">
                 <div className="relative flex justify-center min-h-20 min-w-24">
                     <img className="rounded-full w-20 lg:w-24 absolute top-0 left-[-40px]" alt="" src="https://www.directorysf.com/ellipse-51@3x.jpg" />
                     <img className="rounded-full w-20 lg:w-24 absolute top-0 left-0" alt="" src="https://www.directorysf.com/ellipse-50@3x.jpg" />
@@ -49,7 +49,7 @@ const UnprotectedHomepage = () => {
                     <SignInButton />
                 </span>
 
-                <div className="flex text-center gap-2 md:gap-4 border border-gray-300 rounded-3xl p-4 mt-8 text-sm">
+                <div className="flex text-center gap-2 md:gap-4 border border-gray-300 rounded-3xl p-4 md:mt-8 text-sm">
                     <span><span className="text-blue-400 font-bold">1412</span> members of DirectorySF</span>
                     <span><span className="text-blue-400 font-bold">108</span> listings this month 🔥</span>
                 </div>

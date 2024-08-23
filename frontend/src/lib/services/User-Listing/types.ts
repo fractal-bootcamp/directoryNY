@@ -14,7 +14,6 @@ export type UserListingType = {
   email?: string;
 };
 
-
 export type UserWithReferredByUser = User & {
   referredByUser?: User;
 };

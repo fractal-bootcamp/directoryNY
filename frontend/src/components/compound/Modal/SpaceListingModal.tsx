@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { SpaceListingInput } from "../../../lib/services/Space-Listing/types";
 import SpaceListingService from "../../../lib/services/Space-Listing/service";
-import { User } from "../../../lib/services/Users/types";
-import { LeaseLength, RoommateCount, MovingTimeline } from "../../pages/types";
 import { UserService } from "../../../lib/services/Users/service";
 import Dropdown from "../Dropdown";
 
@@ -19,14 +17,16 @@ enum RoomPrice {
 interface SpaceListingModalProps {
     onClose: () => void;
     onSubmitSuccess: () => void;
+    listingExists: boolean;
 }
 
 const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
     onClose,
     onSubmitSuccess,
+    listingExists,
 }) => {
-    const [currentUser, setCurrentUser] = useState<User>();
-
+    const userService = UserService();
+    const [editListingId, setEditListingId] = useState<string | null>(null);
     const [formData, setFormData] = useState<SpaceListingInput>({
         user_id: "",
         name: "",
@@ -40,23 +40,45 @@ const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
         priceRange: "",
     });
 
+    useEffect(() => {
+        const fetchUserAndListing = async () => {
+            const userResponse = await userService.getCurrentUser();
+            const user = userResponse.data;
+            if (!user) return;
+
+            const spaceListingService = SpaceListingService();
+            const listingsResponse = await spaceListingService.getAll();
+            const editListingId = listingsResponse.data.find(listing => listing.user_id === user.id);
+
+            if (editListingId && listingExists) {
+                setFormData({
+                    user_id: editListingId.user_id,
+                    name: editListingId.name,
+                    description: editListingId.description,
+                    location: editListingId.location,
+                    housemates: editListingId.housemates,
+                    website: editListingId.website || "",
+                    image: editListingId.image || "",
+                    phone: editListingId.phone || "",
+                    email: editListingId.email || "",
+                    priceRange: editListingId.priceRange,
+                });
+                setEditListingId(editListingId.id);
+            } else {
+                setFormData(prevData => ({ ...prevData, user_id: user.id || "" }));
+            }
+        };
+        fetchUserAndListing();
+    }, []);
+
+
+
     const onFilterChange = (field: string, value: string) => {
         setFormData((prevData) => ({ ...prevData, [field]: value }));
     };
 
-    // const userService = useUserService()
-    const userService = UserService();
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            const userResponse = await userService.getCurrentUser();
-            const user = userResponse.data;
-            if (!user) return;
-            setCurrentUser(user);
-            setFormData((prevData) => ({ ...prevData, user_id: user.id || "" }));
-        };
-        fetchUser();
-    }, []);
+
 
     const handleChange = (
         e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -68,9 +90,20 @@ const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const spaceListingService = SpaceListingService();
+
         try {
-            await spaceListingService.create(formData);
-            console.log("Submitted:", { formData });
+            if (editListingId && listingExists) {
+                await spaceListingService.update(
+                    editListingId,
+                    formData
+                );
+                console.log("Updated:", { formData });
+            }
+            else {
+
+                await spaceListingService.create(formData);
+                console.log("Submitted:", { formData });
+            }
             onSubmitSuccess();
             onClose();
         } catch (error) {

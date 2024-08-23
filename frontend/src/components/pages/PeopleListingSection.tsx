@@ -1,23 +1,14 @@
-//import FilterSection from "../compound/FilterSection";
 import UserListing from "../compound/UserListing";
 import { useCallback, useEffect, useState } from "react";
-// import { UserListingProps, UserListingType } from "../types";
 import { UserListingDisplayData } from "../../lib/services/User-Listing/types";
 import UserListingService from "../../lib/services/User-Listing/service";
 import { LeaseLength, RoommateCount, MovingTimeline } from "./types";
-
-
 import ProfileBanner from "../compound/Banner/ProfileBanner";
 
-// type UserPreference = Pick<
-//   UserListingType,
-//   | "lease_length_preference"
-//   | "lease_timing_preference"
-//   | "lease_roommates_preference"
-// >;
-
 export default function PeopleListingSection() {
-  const [userlistings, setuserListings] = useState<Array<UserListingDisplayData>>([]);
+  const [userlistings, setuserListings] = useState<
+    Array<UserListingDisplayData>
+  >([]);
   const currentDate = new Date();
 
   console.log("people section");
@@ -67,27 +58,6 @@ export default function PeopleListingSection() {
     ["This Month", adj_date(7), adj_date(31)],
     ["Older", adj_date(31), new Date(0)],
   ];
-
-  POSTING_TIME_FRAMES.map((frame) => {
-    userlistings
-      .sort((a, b) =>
-        a.createdAt > b.createdAt ? 1 : b.createdAt > a.createdAt ? -1 : 0
-      )
-      .filter((f) => {
-        console.log(new Date(f.createdAt), frame);
-        console.log(
-          new Date(f.createdAt) <= frame[1],
-          new Date(f.createdAt) > frame[2]
-        );
-        return (
-          new Date(f.createdAt) <= frame[1], new Date(f.createdAt) > frame[2]
-        );
-      })
-      .map((listing) => {
-        console.log("listing", listing);
-        return listing;
-      });
-  });
 
   const SelectFilter = ({
     name,
@@ -145,8 +115,6 @@ export default function PeopleListingSection() {
   return (
     <>
       <ProfileBanner onListingAdded={handleListingAdded} />
-
-      {/* <div className="flex flex-col gap-4 mb-4"> */}
       <div className="flex flex-row gap-2 grow">
         <div className="flex flex-col gap-2 grow">
           <label
@@ -169,7 +137,7 @@ export default function PeopleListingSection() {
               defaultval={default_values[1]}
               selected={leaseroommatereference}
               changeHandler={(e) => setLeaseroommatereference(e.target.value)}
-            // defaultval="Any count"
+              // defaultval="Any count"
             />
 
             <div
@@ -192,7 +160,7 @@ export default function PeopleListingSection() {
             selected={leasetimingpreference}
             defaultval={default_values[2]}
             changeHandler={(e) => setLeasetimingpreference(e.target.value)}
-          // defaultval="Any timeline"
+            // defaultval="Any timeline"
           />
         </div>
         {/* </div> */}
@@ -203,14 +171,14 @@ export default function PeopleListingSection() {
           <div className="font-bold text-2xl pl-2 mt-4">
             {frame[0] as string}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-primary p-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-primary ">
             {userlistings
               .sort((a, b) =>
                 a.createdAt > b.createdAt
-                  ? 1
+                  ? -1
                   : b.createdAt > a.createdAt
-                    ? -1
-                    : 0
+                  ? 1
+                  : 0
               )
               .filter(
                 (f) =>

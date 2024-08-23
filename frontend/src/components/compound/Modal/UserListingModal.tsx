@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { UserListingInput } from "../../../lib/services/User-Listing/types";
 import UserListingService from "../../../lib/services/User-Listing/service";
-import { User } from "../../../lib/services/Users/types";
 import { LeaseLength, RoommateCount, MovingTimeline } from "../../pages/types";
 import { UserService } from "../../../lib/services/Users/service";
 
@@ -15,7 +14,6 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
     onClose,
     onSubmitSuccess,
 }) => {
-    const [currentUser, setCurrentUser] = useState<User>();
 
     const [formData, setFormData] = useState<UserListingInput>({
         user_id: "",
@@ -36,7 +34,6 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
             const userResponse = await userService.getCurrentUser();
             const user = userResponse.data;
             if (!user) return;
-            setCurrentUser(user);
             setFormData((prevData) => ({ ...prevData, user_id: user.id || "" }));
             console.log(user, "here");
         };
