@@ -17,7 +17,6 @@ const Referral: React.FC<ReferralProps> = ({ onClose }) => {
 
     useEffect(() => {
         fetchReferralCode();
-
     }, []);
 
     const fetchReferralCode = async () => {
@@ -38,7 +37,7 @@ const Referral: React.FC<ReferralProps> = ({ onClose }) => {
         }
     };
 
-    const referralLink = `https://directoryNY.com/?ref=${referralCode}&uid=${userId}`;
+    const referralLink = `${import.meta.env.VITE_FRONTEND_URL}/login?ref=${referralCode}&uid=${userId}`;
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(referralLink);

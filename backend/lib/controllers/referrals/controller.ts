@@ -1,10 +1,10 @@
-import express from 'express';
+import express, { Request } from 'express';
 import client from '../../../prisma/client';
 
 const router = express.Router();
 
 // generate or retrieve referral code for a user
-router.get('/code/:userId', async (req, res) => {
+router.get('/code/:userId', async (req: Request, res) => {
     const { userId } = req.params;
     try {
         console.log('userId', userId);
@@ -14,6 +14,8 @@ router.get('/code/:userId', async (req, res) => {
         });
 
         console.log('referral', referral);
+
+        // TODO: just make the code for the current user. req.user
 
         if (!referral) {
             // Check if the user exists
@@ -55,8 +57,9 @@ router.get('/code/:userId', async (req, res) => {
 
 // Apply a referral code when a new user signs up
 router.post('/apply', async (req, res) => {
-    const { referralCode, newUserId } = req.body;
-
+    const { userId, referralCode, referrerId } = req.body;
+    console.log("Reached /referral/apply endpoint");
+    console.log("Request body:", req.body);
     try {
         const referral = await client.referral.findUnique({
             where: { id: referralCode },
@@ -71,22 +74,27 @@ router.post('/apply', async (req, res) => {
             return res.status(400).json({ error: 'Referral code has reached its usage limit' });
         }
 
-        // Update the user being referred
-        await client.user.update({
-            where: { id: newUserId },
-            data: { referredbyId: referralCode }
-        });
+        if (referral.referrerId !== referrerId) {
+            return res.status(400).json({ error: 'Invalid referrer ID' });
+        }
 
-        // Update the referral
-        await client.referral.update({
+        const updatedReferral = await client.referral.update({
             where: { id: referralCode },
             data: {
-                referredUsers: { connect: { id: newUserId } },
+                referredUsers: { connect: { id: userId } },
                 count: { increment: 1 }
             }
         });
 
-        res.json({ message: 'Referral applied successfully' });
+        const updatedUser = await client.user.update({
+            where: { id: userId },
+            data: {
+                referredBy: { connect: { id: referralCode } },
+                active: true
+            }
+        });
+
+        res.json({ message: 'Referral applied successfully', user: updatedUser, referral: updatedReferral });
     } catch (error) {
         console.error('Error applying referral:', error);
         res.status(500).json({ error: 'Failed to apply referral' });

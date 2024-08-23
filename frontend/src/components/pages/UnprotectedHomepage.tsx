@@ -1,10 +1,33 @@
 import UnprotectedNavbar from "../compound/NavBar/UnprotectedNavbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SignInButton from "../compound/SignInbutton";
-
+import { useEffect } from "react";
 
 const UnprotectedHomepage = () => {
+    const location = useLocation();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const ref = searchParams.get('ref');
+        const uid = searchParams.get('uid');
+        console.log('Ref:', ref);
+        console.log('UID:', uid);
+        if (ref && uid) {
+            try {
+                localStorage.setItem('referralCode', ref);
+                localStorage.setItem('referrerId', uid);
+                console.log('localStorage set successfully');
+                console.log('Stored referralCode:', localStorage.getItem('referralCode'));
+                console.log('Stored referrerId:', localStorage.getItem('referrerId'));
+            } catch (error) {
+                console.error('Error setting localStorage:', error);
+            }
+        } else {
+            console.log('No ref or uid found in URL');
+        }
+    }, [location]);
+
     return (
         <div className="h-screen">
             <UnprotectedNavbar />

@@ -38,14 +38,13 @@ model User {
 }
 
 model Referral {
-  id             String   @id @default(cuid())
-  referrerId     String
-  referrer       User     @relation("ReferrerRelation", fields: [referrerId], references: [id])
-  referredUserId String?
-  referredUsers  User[]   @relation("ReferredByRelation")
-  createdAt      DateTime @default(now())
-  count          Int      @default(0)
-  usageLimit     Int      @default(1)
+  id            String   @id @default(cuid())
+  referrerId    String
+  referrer      User     @relation("ReferrerRelation", fields: [referrerId], references: [id])
+  referredUsers User[]   @relation("ReferredByRelation")
+  createdAt     DateTime @default(now())
+  count         Int      @default(0)
+  usageLimit    Int      @default(5)
 
   @@map("referral")
 }

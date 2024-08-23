@@ -30,7 +30,7 @@ export const requireAuth = async (req: AuthenticatedRequest, res: Response, next
   const details = await auth.verifyIdToken(token);
   const userdetails = await auth.getUser(details.uid);
   //   todo: add userdetails to req
-  console.log("userdetails: ", userdetails);
+  console.log("USERDETAILS: ", userdetails);
 
 
   req["userFirebaseId"] = details.uid;
@@ -49,34 +49,39 @@ export const userMiddleware = async (req: AuthenticatedRequest, res: Response, n
   const firebaseId = req.userFirebaseId
   if (!firebaseId) return res.status(401).json({ message: "Unauthorized" })
 
-
   try {
     const user = await UserService().getUserByFirebaseId(firebaseId)
     if (user) {
       req["user"] = user;
+      console.log("USER MIDDLEWARE:", req["user"]);
+      // Check if the user has a referral applied
+      // if (!user.referredbyId) {
+      //   return res.status(400).json({ message: "User has no referral applied" });
+      // }
       next();
-    } else {
-      // User doesn't exist, create a new user
+    }
+    else {
       if (!req.userTwitterDetails) {
         return res.status(400).json({ message: "User Twitter details are missing" });
       }
 
-      const newUser: Omit<User, 'id' | 'createdAt' | 'updatedAt'> = {
+      const user = await UserService().createUser({
+        firebaseId,
         displayName: req.userTwitterDetails.displayName,
         profilePicture: req.userTwitterDetails.profilePicture,
-        twitterHandle: "@fractaltechnyc",
-        firebaseId: firebaseId,
+        referredbyId: null,
+        twitterHandle: "",
         active: false,
-        referredbyId: null
-      }
-      const createdUser = await UserService().createUser(newUser)
-      req["user"] = createdUser
+      });
+      req["user"] = user;
       next();
 
     }
+
   }
   catch (error) {
     console.log('error', error)
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
 

@@ -10,7 +10,7 @@ import {
   browserLocalPersistence,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { UserService } from "../../lib/services/users/service";
+import { UserService } from "../../lib/services/Users/service";
 
 interface ReloadUserInfo {
   screenName: string;
@@ -26,47 +26,41 @@ const SignInButton = () => {
   const auth = getAuth(firebaseApp);
   const navigate = useNavigate();
   const provider = new TwitterAuthProvider();
+
   const handleSignIn = async () => {
     try {
       await setPersistence(auth, browserLocalPersistence);
       const result = await signInWithPopup(auth, provider);
-      const user = result.user as ExtendedUser; // Type assertion
+      const user = result.user as ExtendedUser;
       const username = user.reloadUserInfo.screenName;
       const token = user.accessToken;
       sessionStorage.setItem("firebaseUserToken", token);
 
-      //Sending the twitter handle to the backend to save it with the user
       const current_user_res = await UserService().getCurrentUser();
       const current_user = current_user_res.data;
-      console.log("twitter current user", current_user);
+
       if (current_user) {
-        const response = await UserService().update(current_user.id, {
+        await UserService().update(current_user.id, {
           ...current_user,
           twitterHandle: username,
         });
-        console.log(
-          "twitterHandle",
-          response.data,
-          response.data.twitterHandle
-        );
-        // await request.json();
-        if (!response.error) {
-          navigate("/");
-          // Ensure this is reached
-        }
       } else {
         console.error("no current user");
       }
     } catch (error) {
-      console.error("Error during sign-in:", error); // Log any errors
+      console.error("Error during sign-in:", error);
     }
   };
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log("hello user", user);
       setUser(user as ExtendedUser);
+    } else {
+      // navigate("/login");
     }
   });
+
   const signOut = () => {
     sessionStorage.removeItem("firebaseUserToken");
     auth.signOut();

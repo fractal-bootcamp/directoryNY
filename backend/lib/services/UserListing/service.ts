@@ -11,7 +11,11 @@ export const UserListingService = (): IUserListingService => ({
             include: {
                 User: {
                     include: {
-                        referredByUser: true
+                        referredBy: {
+                            include: {
+                                referrer: true
+                            }
+                        }
                     }
                 }
             }
@@ -23,7 +27,11 @@ export const UserListingService = (): IUserListingService => ({
             ...userListing,
             User: {
                 ...userListing.User,
-                referredByUser: userListing.User.referredByUser || undefined
+                referredBy: {
+                    include: {
+                        referrer: true
+                    }
+                }
             }
         };
     },
@@ -32,7 +40,11 @@ export const UserListingService = (): IUserListingService => ({
             include: {
                 User: {
                     include: {
-                        referredByUser: true
+                        referredBy: {
+                            include: {
+                                referrer: true
+                            }
+                        }
                     }
                 }
             }
@@ -41,7 +53,11 @@ export const UserListingService = (): IUserListingService => ({
             ...listing,
             User: {
                 ...listing.User,
-                referredByUser: listing.User.referredByUser || undefined
+                referredBy: {
+                    include: {
+                        referrer: true
+                    }
+                }
             }
         }));
     },
