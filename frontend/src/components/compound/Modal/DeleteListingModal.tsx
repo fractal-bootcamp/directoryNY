@@ -21,11 +21,11 @@ const DeleteListingModal: React.FC<DeleteListingModalProps> = ({
     const userListingService = UserListingService();
     const spaceListingService = SpaceListingService();
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (listingCategory === "SpaceListing") {
-            spaceListingService.delete(listingId);
+            await spaceListingService.delete(listingId);
         } else if (listingCategory === "UserListing") {
-            userListingService.delete(listingId);
+            await userListingService.delete(listingId);
         }
         onSubmitSuccess();
         onClose();

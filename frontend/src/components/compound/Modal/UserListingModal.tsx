@@ -8,13 +8,17 @@ import { UserService } from "../../../lib/services/Users/service";
 interface UserListingModalProps {
     onClose: () => void;
     onSubmitSuccess: () => void;
+    listingExists: boolean;
 }
 
 const UserListingModal: React.FC<UserListingModalProps> = ({
     onClose,
     onSubmitSuccess,
+    listingExists,
 }) => {
 
+    const userService = UserService();
+    const [editListingId, setEditListingId] = useState<string | null>(null);
     const [formData, setFormData] = useState<UserListingInput>({
         user_id: "",
         leaselength: "",
@@ -26,18 +30,34 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
         email: "",
     });
 
-    // const userService = useUserService()
-    const userService = UserService();
 
     useEffect(() => {
-        const fetchUser = async () => {
+        const fetchUserAndListing = async () => {
             const userResponse = await userService.getCurrentUser();
             const user = userResponse.data;
             if (!user) return;
-            setFormData((prevData) => ({ ...prevData, user_id: user.id || "" }));
+
+            const userListingService = UserListingService();
+            const listingsResponse = await userListingService.getAll();
+            const editListingId = listingsResponse.data.find(listing => listing.user_id === user.id);
+            if (editListingId && listingExists) {
+                setFormData({
+                    user_id: editListingId.user_id,
+                    leaselength: editListingId.leaselength,
+                    moveInTime: editListingId.moveInTime,
+                    housematesCount: editListingId.housematesCount,
+                    description: editListingId.description,
+                    website: editListingId.website || "",
+                    phone: editListingId.phone || "",
+                    email: editListingId.email || "",
+                });
+                setEditListingId(editListingId.id);
+            } else {
+                setFormData(prevData => ({ ...prevData, user_id: user.id || "" }));
+            }
             console.log(user, "here");
         };
-        fetchUser();
+        fetchUserAndListing();
     }, []);
 
     const handleChange = (
@@ -51,8 +71,14 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
         e.preventDefault();
         const userListingService = UserListingService();
         try {
-            await userListingService.create(formData);
-            console.log("Submitted:", { formData });
+            if (editListingId && listingExists) {
+                await userListingService.update(editListingId, formData);
+                console.log("Updated:", { formData });
+            }
+            else {
+                await userListingService.create(formData);
+                console.log("Submitted:", { formData });
+            }
             onSubmitSuccess();
             onClose();
         } catch (error) {

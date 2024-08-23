@@ -32,8 +32,9 @@ router.post("/create", async (req, res) => {
 });
 
 router.put("/:userListingId", async (req, res) => {
+    const updatedUserListingId = req.params.userListingId;
     const updatedUserListing = req.body;
-    const userListing = await UserListingService().updateUserListing(updatedUserListing);
+    const userListing = await UserListingService().updateUserListing(updatedUserListingId, updatedUserListing);
     if (userListing) {
         res.status(200).json(userListing);
     } else {

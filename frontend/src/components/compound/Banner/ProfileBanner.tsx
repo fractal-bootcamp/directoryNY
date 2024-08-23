@@ -1,19 +1,33 @@
 import React, { useState } from "react";
 import UserListingModal from "../Modal/UserListingModal"; // Adjust the import path
+import { UserListingDisplayData } from "../../../lib/services/User-Listing/types";
+import DeleteListingModal from "../Modal/DeleteListingModal";
 
 interface ProfileBannerProps {
-  onListingAdded: () => void;
+  handleListingsChanged: () => void;
+  userListings: Array<UserListingDisplayData>;
 }
 
-const ProfileBanner = ({ onListingAdded }: ProfileBannerProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+const ProfileBanner = ({ handleListingsChanged, userListings }: ProfileBannerProps) => {
+  const [isAddEditModalOpen, setAddEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true); // Function to open the modal
+  const listingExists: boolean = userListings.length > 0;
+
+  const openAddEditModal = () => {
+    setAddEditModalOpen(true); // Function to open the modal
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false); // Function to close the modal
+  const closeAddEditModal = () => {
+    setAddEditModalOpen(false); // Function to close the modal
+  };
+
+  const handleDeleteClick = () => {
+    setDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
   };
 
   return (
@@ -24,16 +38,37 @@ const ProfileBanner = ({ onListingAdded }: ProfileBannerProps) => {
       <div className="text-sm lg:text-base ">
         Create a profile to be discovered by communities and organizers
       </div>
-      <button
-        className="bg-[#5279E0] text-xs text-white p-3 rounded-3xl w-fit px-4"
-        onClick={openModal}
-      >
-        Add me
-      </button>
-      {isModalOpen && (
+
+      <div className="flex flex-row gap-2">
+
+        <button
+          className="bg-[#5279E0] text-xs text-white p-3 rounded-3xl w-fit px-4"
+          onClick={openAddEditModal}
+        >
+          {listingExists ? "Edit profile" : "Add profile"}
+        </button>
+        {listingExists && (
+          <button
+            className="bg-red-400 text-xs text-white p-3 rounded-3xl w-fit px-4"
+            onClick={handleDeleteClick}
+          >
+            Delete profile
+          </button>
+        )}
+      </div>
+      {isAddEditModalOpen && (
         <UserListingModal
-          onClose={closeModal}
-          onSubmitSuccess={onListingAdded}
+          onClose={closeAddEditModal}
+          onSubmitSuccess={handleListingsChanged}
+          listingExists={listingExists}
+        />
+      )}
+      {isDeleteModalOpen && (
+        <DeleteListingModal
+          onClose={closeDeleteModal}
+          onSubmitSuccess={handleListingsChanged}
+          listingCategory="UserListing"
+          listingId={userListings[0].id}
         />
       )}
     </div>

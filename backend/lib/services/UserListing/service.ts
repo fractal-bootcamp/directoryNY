@@ -17,7 +17,6 @@ export const UserListingService = (): IUserListingService => ({
       },
     });
     if (!userListing) return null;
-
     return {
       ...userListing,
       User: {
@@ -26,6 +25,7 @@ export const UserListingService = (): IUserListingService => ({
       },
     };
   },
+
   getAllUserListings: async () => {
     const userListings = await prisma.userListing.findMany({
       include: {
@@ -44,6 +44,7 @@ export const UserListingService = (): IUserListingService => ({
       },
     }));
   },
+
   createUserListing: async (newUserListing) => {
     if (newUserListing.website) {
       if (!newUserListing.website.startsWith("https://")) {
@@ -55,17 +56,17 @@ export const UserListingService = (): IUserListingService => ({
     });
     return userListing;
   },
-  updateUserListing: async (updatedUserListing) => {
-    const { id, ...updateData } = updatedUserListing;
 
+  updateUserListing: async (updatedUserListingId, updatedUserListing) => {
     const userListing = await prisma.userListing.update({
       where: {
-        id,
+        id: updatedUserListingId,
       },
-      data: updateData,
+      data: updatedUserListing,
     });
     return userListing;
   },
+
   deleteUserListing: async (userListingId) => {
     const userListing = await prisma.userListing.delete({
       where: {

@@ -4,11 +4,12 @@ import { UserListingDisplayData } from "../../lib/services/User-Listing/types";
 import UserListingService from "../../lib/services/User-Listing/service";
 import { LeaseLength, RoommateCount, MovingTimeline } from "./types";
 import ProfileBanner from "../compound/Banner/ProfileBanner";
+import { User } from "../../lib/services/Users/types";
+import { UserService } from "../../lib/services/Users/service";
 
 export default function PeopleListingSection() {
-  const [userlistings, setuserListings] = useState<
-    Array<UserListingDisplayData>
-  >([]);
+  const [userlistings, setuserListings] = useState<Array<UserListingDisplayData>>([]);
+
   const currentDate = new Date();
 
   console.log("people section");
@@ -26,9 +27,11 @@ export default function PeopleListingSection() {
     fetchListings();
   }, [fetchListings]);
 
-  const handleListingAdded = () => {
+  const handleListingsChanged = useCallback(() => {
+    console.log("listings bananaed");
     fetchListings();
-  };
+  }, [fetchListings]);
+
 
   const default_values: [string, string, string] = [
     "Any lease",
@@ -114,7 +117,7 @@ export default function PeopleListingSection() {
   };
   return (
     <>
-      <ProfileBanner onListingAdded={handleListingAdded} />
+      <ProfileBanner handleListingsChanged={handleListingsChanged} userListings={userlistings} />
       <div className="flex flex-row gap-2 grow">
         <div className="flex flex-col gap-2 grow">
           <label
@@ -137,7 +140,7 @@ export default function PeopleListingSection() {
               defaultval={default_values[1]}
               selected={leaseroommatereference}
               changeHandler={(e) => setLeaseroommatereference(e.target.value)}
-              // defaultval="Any count"
+            // defaultval="Any count"
             />
 
             <div
@@ -160,7 +163,7 @@ export default function PeopleListingSection() {
             selected={leasetimingpreference}
             defaultval={default_values[2]}
             changeHandler={(e) => setLeasetimingpreference(e.target.value)}
-            // defaultval="Any timeline"
+          // defaultval="Any timeline"
           />
         </div>
         {/* </div> */}
@@ -177,8 +180,8 @@ export default function PeopleListingSection() {
                 a.createdAt > b.createdAt
                   ? -1
                   : b.createdAt > a.createdAt
-                  ? 1
-                  : 0
+                    ? 1
+                    : 0
               )
               .filter(
                 (f) =>
