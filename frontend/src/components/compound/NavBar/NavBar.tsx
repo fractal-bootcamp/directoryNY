@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import UserDropdown from "./UserDropdown";
 import HousingForm from "../../base/HousingForm";
 import Referral from "../../base/Referral";
@@ -18,7 +18,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="top-0 left-0 right-0 bg-primary">
+    <nav className="top-0 left-0 right-0">
       <div className="mx-auto px-4 py-2 flex justify-between items-center">
         {/* Directory NY logo */}
         <div className="flex-shrink-0 ml-6">
