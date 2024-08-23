@@ -62,27 +62,6 @@ export default function PeopleListingSection() {
     ["Older", adj_date(31), new Date(0)],
   ];
 
-  POSTING_TIME_FRAMES.map((frame) => {
-    userlistings
-      .sort((a, b) =>
-        a.createdAt > b.createdAt ? 1 : b.createdAt > a.createdAt ? -1 : 0
-      )
-      .filter((f) => {
-        console.log(new Date(f.createdAt), frame);
-        console.log(
-          new Date(f.createdAt) <= frame[1],
-          new Date(f.createdAt) > frame[2]
-        );
-        return (
-          new Date(f.createdAt) <= frame[1], new Date(f.createdAt) > frame[2]
-        );
-      })
-      .map((listing) => {
-        console.log("listing", listing);
-        return listing;
-      });
-  });
-
   const SelectFilter = ({
     name,
     options,
@@ -199,9 +178,9 @@ export default function PeopleListingSection() {
             {userlistings
               .sort((a, b) =>
                 a.createdAt > b.createdAt
-                  ? 1
+                  ? -1
                   : b.createdAt > a.createdAt
-                    ? -1
+                    ? 1
                     : 0
               )
               .filter(

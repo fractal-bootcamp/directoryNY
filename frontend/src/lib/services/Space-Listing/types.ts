@@ -1,3 +1,5 @@
+import { User } from "../Users/types";
+
 export type SpaceListing = {
   id: string;
   createdAt: string;
@@ -8,16 +10,23 @@ export type SpaceListing = {
   location: string;
   housemates: string;
   priceRange: string;
-  leaselength: string;
   website?: string;
   image?: string;
   phone?: string;
   email?: string;
-  twitter_url?: string;
-  twitter_handle: string;
-  referrer_image?: string;
-  referrer_name: string;
-  referrer_twitter_url: string;
+  // twitter_url?: string;
+  // twitter_handle: string;
+  // referrer_image?: string;
+  // referrer_name: string;
+  // referrer_twitter_url: string;
+};
+
+export type UserWithReferredByUser = User & {
+  referredByUser?: User;
+};
+
+export type SpaceListingDisplayData = SpaceListing & {
+  User: UserWithReferredByUser;
 };
 
 export type SpaceListingInput = Omit<
@@ -30,5 +39,4 @@ export type SpaceListingInput = Omit<
   | "referrer_twitter_url"
   | "twitter_handle"
   | "referrer_name"
-  | "leaselength"
 >;
