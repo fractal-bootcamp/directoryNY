@@ -47,7 +47,7 @@ const MainLayout: React.FC = () => {
             <div>
                 <NavBar />
             </div>
-            <main className="px-8 py-6 bg-primary">
+            <main className="h-screen px-8 py-6 bg-primary">
                 <Outlet />
             </main>
         </div>

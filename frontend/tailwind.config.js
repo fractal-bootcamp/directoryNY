@@ -4,12 +4,15 @@ export default {
   theme: {
     extend: {
       backgroundColor: {
-        primary: "#FEFBEB",
+        primary: "#FFF",
         darkGreen: "#1D462F",
         lightGreen: "#519F69",
         bgGreen: "#F7FCEF",
         normalBlue: "#5279E0",
       },
+      backgroundImage: {
+        rainbow: "url(./rainbow_bg.png)",
+      }
     },
   },
   plugins: [],

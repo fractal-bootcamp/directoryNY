@@ -41,7 +41,7 @@ export default function UserListing({
       <div className="p-4 bg-[#FFFDF3] rounded-2xl flex flex-col border-[1px] max-w-1/3 child-inherit-bg">
         <div className="flex items-center justify-between bg-inherit">
           <img
-            className="rounded-full w-20 h-20 lg:w-28 lg:h-28 undefined mb-2"
+            className="rounded-full w-[120px] h-[120px] lg:w-28 lg:h-28 undefined mb-2"
             alt="User profile image"
             src={UserListingData.User.profilePicture}
           />

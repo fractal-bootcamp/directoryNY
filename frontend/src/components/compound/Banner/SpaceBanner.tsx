@@ -54,24 +54,24 @@ const SpaceBanner = ({ handleListingsChanged, spaceListings }: SpaceBannerProps)
 
 
   return (
-    <div className="flex flex-col p-4 border border-2 rounded-lg bg-bgGreen gap-2 mb-2">
-      <div className="text-md lg:text-base font-bold">
-        👋 Are you looking for housing?
+    <div className="flex flex-col p-4 border border-2 rounded-lg bg-bgGreen gap-2 mb-6">
+      <div className="text-md lg:text-lg font-bold">
+        🏡 Have a co-living space, sublet, or vacant room?
       </div>
-      <div className="text-sm lg:text-base ">
-        Create a profile to be discovered by communities and organizers
+      <div className="text-sm lg:text-base">
+        Add your space to be discovered by people looking for housing
       </div>
 
       <div className="flex flex-row gap-2">
         <button
-          className="bg-[#4CAF50] text-xs text-white p-3 rounded-3xl w-fit px-4"
+          className="bg-[#4CAF50] text-sm text-white p-3 rounded-3xl w-fit px-4"
           onClick={openAddEditModal}
         >
           {listingExists ? "Edit space listing" : "Add space listing"}
         </button>
         {listingExists && (
           <button
-            className="bg-red-400 text-xs text-white p-3 rounded-3xl w-fit px-4"
+            className="bg-red-400 text-sm text-white p-3 rounded-3xl w-fit px-4"
             onClick={handleDeleteClick}
           >
             Delete space listing

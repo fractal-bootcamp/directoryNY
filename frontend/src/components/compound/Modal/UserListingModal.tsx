@@ -70,10 +70,10 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                     className="fixed inset-0 bg-white bg-opacity-85 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
                 />
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto ">
-                    <div className="flex items-end justify-center p-4 text-center sm:items-center sm:p-0 h-screen">
+                    <div className="flex items-center justify-center p-4 text-center sm:items-center sm:p-0 h-screen">
                         <DialogPanel
                             transition
-                            className="border border-gray-200 h-4/6 relative transform overflow-y-auto rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95 p-8"
+                            className="h-4/6 relative transform overflow-y-auto rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95 p-8 border border-gray-200"
                         >
                             <form onSubmit={handleSubmit} className="flex flex-col text-xs">
                                 <div className="flex flex-col justify-center items-center ">
@@ -96,43 +96,46 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                 </section>
                                 <section>
                                     <span>What type of housing do you want?</span>
-                                    <div className="mb-4 flex flex-col gap-2 mt-2">
-                                        <label>
+                                    <div className="mb-4 flex flex-col gap-2 mt-2 ">
+                                        <label className="flex flex-row">
                                             <input
                                                 type="radio"
                                                 name="leaselength"
                                                 value={LeaseLength.OneYear}
                                                 checked={formData.leaselength === LeaseLength.OneYear}
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
-                                            {LeaseLength.OneYear}
+                                            <span >{LeaseLength.OneYear}</span>
                                         </label>
-                                        <label className="">
+                                        <label className="flex flex-row">
                                             <input
                                                 type="radio"
                                                 name="leaselength"
                                                 value={LeaseLength.ShortTerm}
                                                 checked={formData.leaselength === LeaseLength.ShortTerm}
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
-                                            {LeaseLength.ShortTerm}
+                                            <span>{LeaseLength.ShortTerm}</span>
                                         </label>
                                     </div>
                                 </section>
                                 <section>
                                     <span>When do you want to move in?</span>
                                     <div className="mb-4 flex flex-col gap-2 mt-2">
-                                        <label>
+                                        <label className="flex flex-row">
                                             <input
                                                 name="moveInTime"
                                                 type="radio"
                                                 value={MovingTimeline.ASAP}
                                                 checked={formData.moveInTime === MovingTimeline.ASAP}
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
                                             {MovingTimeline.ASAP}
                                         </label>
-                                        <label className="">
+                                        <label className="flex flex-row">
                                             <input
                                                 name="moveInTime"
                                                 type="radio"
@@ -141,10 +144,11 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                                     formData.moveInTime === MovingTimeline.lessthan3
                                                 }
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
                                             {MovingTimeline.lessthan3}
                                         </label>
-                                        <label className="">
+                                        <label className="flex flex-row">
                                             <input
                                                 name="moveInTime"
                                                 type="radio"
@@ -153,6 +157,7 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                                     formData.moveInTime === MovingTimeline.threeplus
                                                 }
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
                                             {MovingTimeline.threeplus}
                                         </label>
@@ -161,7 +166,7 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                 <section>
                                     <span>How many housemates do you want to live with?</span>
                                     <div className="mb-4 flex flex-col gap-2 mt-2">
-                                        <label>
+                                        <label className="flex flex-row">
                                             <input
                                                 name="housematesCount"
                                                 type="radio"
@@ -170,10 +175,11 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                                     formData.housematesCount === RoommateCount.onetwo
                                                 }
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
                                             {RoommateCount.onetwo}
                                         </label>
-                                        <label className="">
+                                        <label className="flex flex-row">
                                             <input
                                                 name="housematesCount"
                                                 type="radio"
@@ -182,10 +188,11 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                                     formData.housematesCount === RoommateCount.threefive
                                                 }
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
                                             {RoommateCount.threefive}
                                         </label>
-                                        <label className="">
+                                        <label className="flex flex-row">
                                             <input
                                                 name="housematesCount"
                                                 type="radio"
@@ -194,10 +201,11 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                                     formData.housematesCount === RoommateCount.sixtwelve
                                                 }
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
                                             {RoommateCount.sixtwelve}
                                         </label>
-                                        <label className="">
+                                        <label className="flex flex-row">
                                             <input
                                                 name="housematesCount"
                                                 type="radio"
@@ -206,6 +214,7 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                                     formData.housematesCount === RoommateCount.twelveplus
                                                 }
                                                 onChange={handleChange}
+                                                className="mr-2"
                                             />
                                             {RoommateCount.twelveplus}
                                         </label>
@@ -219,7 +228,7 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                             name="website"
                                             value={formData.website || ""}
                                             onChange={handleChange}
-                                            className="border p-2 rounded mb-4 w-full text-xs"
+                                            className="border p-2 rounded mb-4 w-full text-xs mt-2"
                                             placeholder="gwern.net"
                                         />
                                     </div>
@@ -232,7 +241,7 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                             name="phone"
                                             value={formData.phone || ""}
                                             onChange={handleChange}
-                                            className="border p-2 rounded mb-4 w-full text-xs"
+                                            className="border p-2 rounded mb-4 w-full text-xs mt-2"
                                             placeholder="123-456-7890"
                                         />
                                     </div>
@@ -245,7 +254,7 @@ const UserListingModal: React.FC<UserListingModalProps> = ({
                                             name="email"
                                             value={formData.email || ""}
                                             onChange={handleChange}
-                                            className="border p-2 rounded mb-4 w-full text-xs"
+                                            className="border p-2 rounded mb-4 w-full text-xs mt-2"
                                             placeholder="example@example.com"
                                         />
                                     </div>

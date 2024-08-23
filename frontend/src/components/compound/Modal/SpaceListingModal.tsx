@@ -121,7 +121,7 @@ const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
                     className="fixed inset-0 bg-white bg-opacity-85 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
                 />
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto ">
-                    <div className="flex items-end justify-center p-4 text-center sm:items-center sm:p-0 h-screen">
+                    <div className="flex items-center justify-center p-4 text-center sm:items-center sm:p-0 h-screen">
                         <DialogPanel
                             transition
                             className="h-4/6 relative transform overflow-y-auto rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95 p-8 border border-gray-200"
@@ -186,7 +186,7 @@ const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
                                 <section>
                                     <span>Room price</span>
                                     <div className="mb-4 flex flex-col gap-2 mt-2">
-                                        <label>
+                                        <label className="flex items-center gap-2">
                                             <input
                                                 type="radio"
                                                 name="priceRange"
@@ -196,7 +196,7 @@ const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
                                             />
                                             {RoomPrice.LessThan1500}
                                         </label>
-                                        <label className="">
+                                        <label className="flex items-center gap-2">
                                             <input
                                                 type="radio"
                                                 name="priceRange"
@@ -206,7 +206,7 @@ const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
                                             />
                                             {RoomPrice.Between1500And1999}
                                         </label>
-                                        <label className="">
+                                        <label className="flex items-center gap-2">
                                             <input
                                                 type="radio"
                                                 name="priceRange"
@@ -216,7 +216,7 @@ const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
                                             />
                                             {RoomPrice.Between2000And2499}
                                         </label>
-                                        <label className="">
+                                        <label className="flex items-center gap-2">
                                             <input
                                                 type="radio"
                                                 name="priceRange"
@@ -226,7 +226,7 @@ const SpaceListingModal: React.FC<SpaceListingModalProps> = ({
                                             />
                                             {RoomPrice.Between2500And3000}
                                         </label>
-                                        <label className="">
+                                        <label className="flex items-center gap-2">
                                             <input
                                                 type="radio"
                                                 name="priceRange"

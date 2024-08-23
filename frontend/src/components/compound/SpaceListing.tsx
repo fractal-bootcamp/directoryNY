@@ -46,7 +46,7 @@ export default function SpaceListingCard({
       <div className="p-4 bg-[#FFFDF3] rounded-2xl flex flex-col border-[1px] w-full max-w-sm child-inherit-bg">
         <div className="flex items-center justify-between bg-inherit mb-4">
           <img
-            className="rounded-full w-20 h-20 object-cover"
+            className="rounded-full w-[120px] h-[120px] object-cover"
             alt="Space photo"
             src={
               SpaceData.image ||

@@ -83,8 +83,12 @@ const UnprotectedLayout: React.FC = () => {
 
     return (
         <div>
-            <main className="bg-primary overflow-hidden">
-                <div>
+            <main
+                className="overflow-hidden"
+            >
+                <div className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed" style={{
+                    backgroundImage: "url('/rainbow_bg.png')",
+                }}>
                     <Outlet />
                 </div>
             </main>
