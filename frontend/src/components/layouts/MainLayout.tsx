@@ -18,6 +18,18 @@ const MainLayout: React.FC = () => {
         return () => unsubscribeAuth(); // Clean up the listener on unmount
     }, [auth, navigate]);
 
+<<<<<<< HEAD
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       await UserService().getCurrentUser(); // Use the instance to call the method
+  //     } catch (error) {
+  //       console.error("Error fetching current user:", error); // Log the error
+  //       navigate("/login");
+  //     }
+  //   })();
+  // }, []);
+=======
     useEffect(() => {
         (async () => {
             try {
@@ -28,6 +40,7 @@ const MainLayout: React.FC = () => {
             }
         })();
     }, []);
+>>>>>>> main
 
     return (
         <div>

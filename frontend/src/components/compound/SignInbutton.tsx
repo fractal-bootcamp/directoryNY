@@ -22,6 +22,51 @@ interface ExtendedUser extends User {
 }
 
 const SignInButton = () => {
+<<<<<<< HEAD
+  const [user, setUser] = useState<ExtendedUser | null>(null);
+  const auth = getAuth(firebaseApp);
+  const navigate = useNavigate();
+  const provider = new TwitterAuthProvider();
+
+  const handleSignIn = async () => {
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user as ExtendedUser;
+      const username = user.reloadUserInfo.screenName;
+      const token = user.accessToken;
+      sessionStorage.setItem("firebaseUserToken", token);
+
+      const current_user_res = await UserService().getCurrentUser();
+      const current_user = current_user_res.data;
+
+      if (current_user) {
+        await UserService().update(current_user.id, {
+          ...current_user,
+          twitterHandle: username,
+        });
+      } else {
+        console.error("no current user");
+      }
+    } catch (error) {
+      console.error("Error during sign-in:", error);
+    }
+  };
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("hello user", user);
+      setUser(user as ExtendedUser);
+    } else {
+      // navigate("/login");
+    }
+  });
+
+  const signOut = () => {
+    sessionStorage.removeItem("firebaseUserToken");
+    auth.signOut();
+  };
+=======
     const [user, setUser] = useState<ExtendedUser | null>(null);
     const auth = getAuth(firebaseApp);
     const navigate = useNavigate();
@@ -71,6 +116,7 @@ const SignInButton = () => {
         sessionStorage.removeItem("firebaseUserToken");
         auth.signOut();
     };
+>>>>>>> main
 
     return (
         <>

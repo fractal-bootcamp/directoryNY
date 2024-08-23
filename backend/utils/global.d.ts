@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User, Referral } from "@prisma/client";
 import express from "express";
 
 declare global {
@@ -9,7 +9,8 @@ declare global {
         displayName: string;
         profilePicture: string;
       };
-      user: User
+      user: User;
+      referral: Referral;
     }
   }
 }

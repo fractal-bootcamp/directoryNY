@@ -6,6 +6,15 @@ import { UserService } from "../lib/services/User/service";
 import { User } from "@prisma/client";
 import { upgradeTwitterPicResolution } from "../utils/upgradeTwitterPicResolution";
 
+interface AuthenticatedRequest extends Request {
+  userFirebaseId?: string;
+  userTwitterDetails?: {
+    displayName: string;
+    profilePicture: string;
+  };
+  user?: User;
+}
+
 const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY
   ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)
   : {};
@@ -14,7 +23,7 @@ const app = admin.initializeApp({
   credential: admin.credential.cert(serviceAccountKey as admin.ServiceAccount),
 });
 
-export const requireAuth = async (req: Request, res: Response, next: NextFunction) => {
+export const requireAuth = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     return res.status(401).json({ message: "Token not found" });
@@ -22,7 +31,7 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
   const details = await auth.verifyIdToken(token);
   const userdetails = await auth.getUser(details.uid);
   //   todo: add userdetails to req
-  console.log("userdetails: ", userdetails);
+  console.log("USERDETAILS: ", userdetails);
 
 
   req["userFirebaseId"] = details.uid;
@@ -37,20 +46,37 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
 
 // if they do exist, pass the user id from our database into req.user 
 
-export const userMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const userMiddleware = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const firebaseId = req.userFirebaseId
   if (!firebaseId) return res.status(401).json({ message: "Unauthorized" })
-
 
   try {
     const user = await UserService().getUserByFirebaseId(firebaseId)
     if (user) {
       req["user"] = user;
+      console.log("USER MIDDLEWARE:", req["user"]);
+      // Check if the user has a referral applied
+      // if (!user.referredbyId) {
+      //   return res.status(400).json({ message: "User has no referral applied" });
+      // }
       next();
-    } else {
-      // User doesn't exist, create a new user
-      const newUser: Omit<User, 'id' | 'createdAt' | 'updatedAt'> = {
+    }
+    else {
+      if (!req.userTwitterDetails) {
+        return res.status(400).json({ message: "User Twitter details are missing" });
+      }
+
+      const user = await UserService().createUser({
+        firebaseId,
         displayName: req.userTwitterDetails.displayName,
+<<<<<<< HEAD
+        profilePicture: req.userTwitterDetails.profilePicture,
+        referredbyId: null,
+        twitterHandle: "",
+        active: false,
+      });
+      req["user"] = user;
+=======
         profilePicture: upgradeTwitterPicResolution(req.userTwitterDetails.profilePicture),
         twitterHandle: "@fractaltechnyc",
         referredId: null,
@@ -58,12 +84,15 @@ export const userMiddleware = async (req: Request, res: Response, next: NextFunc
       }
       const createdUser = await UserService().createUser(newUser)
       req["user"] = createdUser
+>>>>>>> main
       next();
 
     }
+
   }
   catch (error) {
     console.log('error', error)
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
 

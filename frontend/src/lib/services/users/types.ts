@@ -14,6 +14,7 @@ model User {
   ReferredUsers  User[]         @relation("Referrals")
   UserListing    UserListing[]
   HelpForm       HelpForm[]
+  active         Boolean        @default(false)
 
   @@map("user")
 }
@@ -30,14 +31,27 @@ export type User = {
   twitterHandle: string;
   profilePicture: string;
   firebaseId: string | null;
-  referredId: string | null;
-  referredByUser: User | null;
+  referredbyId: string | null;
+  referredBy: Referral | null;
+  active: boolean;
 };
+
+export type Referral = {
+  id: string;
+  referrerId: string;
+  referrer: User;
+  referredUserId: string | null;
+  referredUsers: User[];
+  createdAt: Date;
+  count: number;
+  usageLimit: number;
+};
+
 export interface IUserService {
   getById: (userId: string) => Response<User>;
   getAll: () => Response<User[]>;
-  create: (user: User) => Response<User>;
-  update: (userId: string, user: User) => Response<User>;
+  create: (user: Partial<User>) => Response<User>;
+  update: (userId: string, user: Partial<User>) => Response<User>;
   delete: (userId: string) => Response<User>;
   getCurrentUser: () => Response<User | null>;
 }
