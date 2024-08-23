@@ -68,8 +68,8 @@ api.interceptors.request.use(
 export const referralApi = {
   getReferralCode: (userId: string) =>
     api.get(EP.referrals.getReferralCode(userId)),
-  applyReferralCode: (userId: string, referralCode: string, referrerId: string) =>
-    api.post(EP.referrals.applyReferralCode, { userId, referralCode, referrerId }),
+  applyReferralCode: (newUserId: string, referralCode: string) =>
+    api.post(EP.referrals.applyReferralCode, { newUserId, referralCode }),
   getReferralStatus: (referralId: string) =>
     api.get(EP.referrals.getReferralStatus(referralId)),
 };

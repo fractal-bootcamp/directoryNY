@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { UserService } from "../../services/User/service";
 
 const router = express.Router();
@@ -13,16 +13,9 @@ router.get('/users/all', async (req, res) => {
   }
 })
 
-router.get('/users/current', async (req: Request, res: Response) => {
-  console.log("Reached /users/current endpoint");
-  console.log("Request user:", req.user);
-  console.log("Request headers:", req.headers);
-  const user = req.user;
-  if (user) {
-    res.json(user);
-  } else {
-    res.status(401).json({ message: "User not found on request object" });
-  }
+router.get('/users/current', async (req, res) => {
+  const user = req.user
+  res.json(user)
 })
 
 router.get('/users/:userId', async (req, res) => {

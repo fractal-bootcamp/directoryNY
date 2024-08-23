@@ -1,3 +1,4 @@
+
 import { IUserService } from "./interface";
 import type { User } from "@prisma/client";
 import prisma from '../../../prisma/client'
@@ -17,21 +18,12 @@ export const UserService = (): IUserService => ({
     },
     createUser: async (newUser) => {
         const user = await prisma.user.create({
-            data: {
-                displayName: newUser.displayName,
-                profilePicture: newUser.profilePicture,
-                twitterHandle: newUser.twitterHandle,
-                firebaseId: newUser.firebaseId,
-                active: newUser.active || false
-            }
+            data: newUser
         })
         return user
     },
     updateUser: async (updatedUser) => {
         const { id, ...updateData } = updatedUser
-        if (!id) {
-            throw new Error("User ID is required for update");
-        }
         const user = await prisma.user.update({
             where: {
                 id: id

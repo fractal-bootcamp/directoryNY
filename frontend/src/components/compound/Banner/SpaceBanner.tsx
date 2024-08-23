@@ -1,10 +1,4 @@
-import { useEffect, useState } from "react";
-import { UserService } from "../../../lib/services/Users/service";
-import SpaceListingService from "../../../lib/services/Space-Listing/service";
-import { SpaceListing } from "../../../lib/services/Space-Listing/types";
-import { User } from "../../../lib/services/Users/types";
-import { SpaceListingCreateForm } from "../SpaceListingCreateForm";
-
+import { useState } from "react";
 
 import SpaceListingModal from "../Modal/SpaceListingModal";// Adjust the import path
 import { SpaceListing } from "../../../lib/services/Space-Listing/types";
@@ -16,18 +10,7 @@ interface SpaceBannerProps {
   spaceListings: Array<SpaceListing>;
 }
 
-<<<<<<< HEAD
-
-
-interface SpaceBannerProps {
-  onListingAdded: () => void;
-}
-
-const SpaceBanner = ({ onListingAdded }: SpaceBannerProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
-=======
 const SpaceBanner = ({ handleListingsChanged, spaceListings }: SpaceBannerProps) => {
->>>>>>> main
 
   const listingExists: boolean = spaceListings.length > 0;
 
