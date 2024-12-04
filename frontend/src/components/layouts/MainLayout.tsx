@@ -30,11 +30,13 @@ const MainLayout: React.FC = () => {
     }, []);
 
     return (
-        <div>
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed" style={{
+            backgroundImage: "url('/rainbow_bg.png')",
+        }}>
             <div>
                 <NavBar />
             </div>
-            <main className="h-screen px-8 py-6 bg-primary">
+            <main className="h-screen px-8 py-6">
                 <Outlet />
             </main>
         </div>
